@@ -2,6 +2,8 @@
 
 _the complete css framework_
 
+![cssed](assets/showcase.gif)
+
 ## Description
 
 A framework with which you're able to write css and generate html without the need to know its syntax. 
