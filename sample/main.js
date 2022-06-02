@@ -1,4 +1,4 @@
-import { render } from './cssed.js'
+import { render } from '../src/cssed.js'
 
 render(
     document.querySelector('#app'),
