@@ -1,4 +1,4 @@
-import {TYPE_REGEX} from './regex.js'
+import { TYPE_REGEX } from './regex.js'
 
 export function render(element, markup) {
     try {
