@@ -1,6 +1,6 @@
-import { TYPE_REGEX } from './regex.js'
+import {TYPE_REGEX} from './regex.js'
 
-export function render (element, markup) {
+export function render(element, markup) {
     try {
         let parsed = parseCSSSyntax(markup)
         let ast = parseToAST(parsed)
@@ -12,7 +12,7 @@ export function render (element, markup) {
     }
 }
 
-function parseCSSSyntax (markup) {
+function parseCSSSyntax(markup) {
     const doc = document.implementation.createHTMLDocument("")
     const style = document.createElement("style");
 
@@ -22,8 +22,8 @@ function parseCSSSyntax (markup) {
     return style.sheet.cssRules;
 }
 
-function parseToAST (parsed) {
-    const root = createVirtualElement('root', 'main', '')
+function parseToAST(parsed) {
+    const root = createASTObject('root', 'main', '')
 
     for (const pars of parsed) {
         let current = root
@@ -38,41 +38,42 @@ function parseToAST (parsed) {
 
         const els = pars.selectorText.trim().split(' ')
 
-        if (els.length > 1) {
-            for (const el of els) {
-                const match = el.match(TYPE_REGEX)
+        els.forEach(function (el, index) {
+            const match = el.match(TYPE_REGEX)
 
-                if (match && match[0]) {
-                    type = match[0].slice(1, -1)
-                }
+            if (match && match[0]) {
+                type = match[0].slice(1, -1)
+            }
 
-                const name = el.split('[')[0].slice(1)
+            name = getName(el)
 
-                console.log('name', name)
-                console.log('current', Object.assign({}, current))
-
+            if (index < els.length - 1) {
                 if (name) {
                     const parent = current.children.find(child => child.name === name)
 
                     if (parent) {
                         current = parent
-                        console.log('current changed', Object.assign({}, current))
+                    } else {
+                        throw Error(`the parent '${el}' not found on line '${pars.selectorText}'. remember that the parent always has to be defined to be able to add a child to it.`)
                     }
+                } else {
+                    throw Error(`failed to get name of '${el}' on line '${pars.selectorText}'.`)
                 }
             }
+        })
 
-            name = els[els.length - 1].split('[')[0].slice(1)
-            current.children.push(createVirtualElement(name, type, content))
-        } else {
-            name = els[0].split('[')[0].slice(1)
-            current.children.push(createVirtualElement(name, type, content))
-        }
+        name = getName(els[els.length - 1])
+        current.children.push(createASTObject(name, type, content))
     }
 
     return root
 }
 
-function createVirtualElement (name, type, content) {
+function getName(selectorText) {
+    return selectorText.split('[')[0].slice(1)
+}
+
+function createASTObject(name, type, content) {
     return {
         name,
         type,
@@ -81,7 +82,7 @@ function createVirtualElement (name, type, content) {
     }
 }
 
-function renderAST (parent, ast) {
+function renderAST(parent, ast) {
     const element = document.createElement(ast.type)
     element.classList.add(ast.name)
 
@@ -96,7 +97,7 @@ function renderAST (parent, ast) {
     }
 }
 
-function renderCSS (markup) {
+function renderCSS(markup) {
     const style = document.createElement('style');
     style.innerHTML = markup;
     document.head.appendChild(style);
@@ -108,23 +109,39 @@ function renderCSS (markup) {
     return style.sheet.cssRules;
 }
 
-function displayError (title, message) {
+function displayError(title, message) {
     render(
         document.body,
         `
         .wrapper[div] {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 600px;
-            height: 400px;
-            padding: 20px;   
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;   
         }
-        .wrapper .title[h1] {
+        
+        .wrapper .content {
+            width: 600px;
+            padding: 30px 30px 26px;
+            border: 3px solid red;
+            border-radius: 5px;
+            background: #fff5f5;
+            font-family: monospace;
+        }
+        
+        .wrapper .content .title[h1] {
+            color: red;
+            margin-top: 8px;
             content: "${title}";
         }
-        .wrapper .message[p] {
+        .wrapper .content .message[p] {
+            color: #ff6565;
+            margin-bottom: 0;
+            line-height: 24px;
             content: "${message}";
         }
         `
