@@ -138,6 +138,7 @@ function displayError(title, message) {
             margin-top: 8px;
             content: "${title}";
         }
+        
         .wrapper .content .message[p] {
             color: #ff6565;
             margin-bottom: 0;
