@@ -43,18 +43,27 @@ export default class ErrorHandler {
             .wrapper .content .title[h1] {
                 color: red;
                 margin-top: 8px;
-                content: "${title}";
+                content: "${ErrorHandler.getValidContent(title)}";
             }
             
             .wrapper .content .message[p] {
                 color: #ff6565;
                 margin-bottom: 0;
                 line-height: 24px;
-                content: "${message}";
+                content: "${ErrorHandler.getValidContent(message)}";
             }
             `
         }
       }
     ).then()
+  }
+
+  /**
+   * Get a valid content
+   * @param message
+   * @private
+   */
+  private static getValidContent(message: string): string {
+    return message.replaceAll('"', '\\"')
   }
 }
