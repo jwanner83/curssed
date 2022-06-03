@@ -1,13 +1,30 @@
+html {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+body {
+    height: 100%;
+    width: 100%;
+    position: relative;
+    background: black;
+    margin: 0;
+}
+
+#root {
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
 .wrapper[div] {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    height: 100%;
+    width: 100%;
+    background: black;
     display: flex;
     justify-content: center;
     align-items: center;
-    background: black;
 }
 
 .wrapper .content {
@@ -17,7 +34,6 @@
     border-radius: 5px;
     background: #cecece;
     font-family: monospace;
-    margin: 40px;
 }
 
 .wrapper .content #title[h1] {
@@ -36,7 +52,7 @@
     content: "the complete css framework";
 }
 
-.wrapper .content .get-started[h2] {
+.wrapper .content .sub[h2] {
     content: "Getting started";
     margin-top: 40px;
 }
@@ -68,4 +84,15 @@
 
 .wrapper .content .code .first {
     content: "}";
+}
+
+.wrapper .content .sub[h2] {
+    content: "Meme";
+    margin-top: 40px;
+}
+
+.wrapper .content .meme[img][src="https://i.imgflip.com/6i5g81.jpg"] {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
 }
