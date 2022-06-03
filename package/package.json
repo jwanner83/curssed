@@ -9,8 +9,8 @@
   "files": [
     "dist/*"
   ],
-  "main": "dist/mod.js",
-  "types": "dist/mod.d.ts",
+  "main": "dist/curssed.js",
+  "types": "dist/curssed.d.ts",
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.2",
     "rollup": "^2.75.5",

@@ -1,4 +1,4 @@
-import { render } from '../package/dist/mod.js'
+import { render } from '../package/dist/curssed.js'
 
 render(
   document.body,

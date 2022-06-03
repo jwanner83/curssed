@@ -11,7 +11,7 @@ const config = [
       typescript({ tsconfig: './tsconfig.json', outputToFilesystem: false })
     ],
     output: {
-      file: 'dist/mod.js',
+      file: 'dist/curssed.js',
       format: 'esm'
     }
   }
@@ -26,7 +26,7 @@ if (production) {
     ],
     output: [
       {
-        file: 'dist/mod.d.ts',
+        file: 'dist/curssed.d.ts',
         format: 'esm'
       }
     ]
