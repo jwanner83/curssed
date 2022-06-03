@@ -5,10 +5,24 @@ export function render(element, markup) {
         let parsed = parseCSSSyntax(markup)
         let ast = parseToAST(parsed)
 
+        console.log(ast)
+
         renderAST(element, ast)
         renderCSS(markup)
     } catch (error) {
         displayError('failed to render', error.message)
+    }
+}
+
+export async function renderFile (element, file) {
+    const response = await fetch(file)
+
+    if (response.ok) {
+        const markup = await response.text()
+
+        render(element, markup)
+    } else {
+        displayError('failed to fetch', `failed to fetch the input file with the name '${file}'. make sure it exists.`)
     }
 }
 
