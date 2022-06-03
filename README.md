@@ -27,6 +27,11 @@ render(
 ).then()
 ```
 
+## example
+
+see the `/docs` folder for a code example or visit [the website](https://jwanner83.github.io/curssed/) to see it live in action.
+
+
 ## usage
 
 ### initialization
