@@ -35,9 +35,13 @@ function parseCSSSyntax(markup) {
 }
 
 function parseToAST(parsed) {
-    const root = createASTObject('root', 'main', new Map(), '')
+    const root = createASTObject('#root', 'main', new Map(), '')
 
     for (const pars of parsed) {
+        if (pars.selectorText === 'body' || pars.selectorText === 'html' || pars.selectorText === '#root') {
+            continue
+        }
+
         let current = root
 
         let name = ''
