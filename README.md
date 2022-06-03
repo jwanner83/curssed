@@ -52,7 +52,7 @@ import { render } from 'curssed.js'
 
 render(document.body, {
   markup: {
-    content: '.content[p] { content: "hello world"; color: red; }'
+    content: '.text[p] { content: "hello world"; color: red; }'
   }
 }).then()
 ```
