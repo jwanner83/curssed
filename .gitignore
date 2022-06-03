@@ -3,3 +3,4 @@ node_modules
 dist
 .rollup.cache
 tsconfig.tsbuildinfo
+.rpt2_cache
