@@ -1,1 +1,1 @@
-export const TYPE_REGEX = /\[.*\]/g
+export const ARGUMENT_REGEX = /\[.*\]/g
