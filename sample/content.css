@@ -20,7 +20,7 @@
     margin: 40px;
 }
 
-.wrapper .content .title[h1] {
+.wrapper .content #title[h1] {
     color: black;
     margin-top: 2px;
     margin-bottom: 8px;

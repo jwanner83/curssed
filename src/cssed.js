@@ -94,7 +94,7 @@ function parseToAST(parsed) {
 }
 
 function getName(selectorText) {
-    return selectorText.split('[')[0].slice(1)
+    return selectorText.split('[')[0].trim()
 }
 
 function createASTObject(name, type, attributes, content) {
@@ -109,7 +109,12 @@ function createASTObject(name, type, attributes, content) {
 
 function renderAST(parent, ast) {
     const element = document.createElement(ast.type)
-    element.classList.add(ast.name)
+
+    if (ast.name.startsWith('#')) {
+        element.id = ast.name.slice(1)
+    } else {
+        element.classList.add(ast.name.slice(1))
+    }
 
     if (ast.attributes && ast.attributes.size > 0) {
         for (const attribute of ast.attributes) {
