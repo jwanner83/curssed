@@ -1,11 +1,9 @@
-import { TYPE_REGEX } from './regex.js'
+import { ARGUMENT_REGEX } from './regex.js'
 
 export function render(element, markup) {
     try {
         let parsed = parseCSSSyntax(markup)
         let ast = parseToAST(parsed)
-
-        console.log(ast)
 
         renderAST(element, ast)
         renderCSS(markup)
@@ -37,13 +35,14 @@ function parseCSSSyntax(markup) {
 }
 
 function parseToAST(parsed) {
-    const root = createASTObject('root', 'main', '')
+    const root = createASTObject('root', 'main', new Map(), '')
 
     for (const pars of parsed) {
         let current = root
 
         let name = ''
         let type = 'div'
+        let attributes = new Map()
         let content = ''
 
         if (pars.style.content) {
@@ -52,11 +51,22 @@ function parseToAST(parsed) {
 
         const els = pars.selectorText.trim().split(' ')
 
-        els.forEach(function (el, index) {
-            const match = el.match(TYPE_REGEX)
+        els.forEach((el, index) => {
+            const argumentMatch = el.match(ARGUMENT_REGEX)
 
-            if (match && match[0]) {
-                type = match[0].slice(1, -1)
+            if (argumentMatch && argumentMatch[0]) {
+                const split = argumentMatch[0].split(']')
+
+                split.forEach((match, index) => {
+                    if (match) {
+                        if (index === 0) {
+                            type = match.slice(1)
+                        } else {
+                            const attribute = match.slice(1).split('=')
+                            attributes.set(attribute[0], attribute[1].slice(1, -1))
+                        }
+                    }
+                })
             }
 
             name = getName(el)
@@ -77,7 +87,7 @@ function parseToAST(parsed) {
         })
 
         name = getName(els[els.length - 1])
-        current.children.push(createASTObject(name, type, content))
+        current.children.push(createASTObject(name, type, attributes, content))
     }
 
     return root
@@ -87,11 +97,12 @@ function getName(selectorText) {
     return selectorText.split('[')[0].slice(1)
 }
 
-function createASTObject(name, type, content) {
+function createASTObject(name, type, attributes, content) {
     return {
         name,
         type,
         content,
+        attributes,
         children: []
     }
 }
@@ -99,6 +110,12 @@ function createASTObject(name, type, content) {
 function renderAST(parent, ast) {
     const element = document.createElement(ast.type)
     element.classList.add(ast.name)
+
+    if (ast.attributes && ast.attributes.size > 0) {
+        for (const attribute of ast.attributes) {
+            element.setAttribute(attribute[0], attribute[1])
+        }
+    }
 
     if (ast.content) {
         element.innerHTML = ast.content
@@ -117,7 +134,7 @@ function renderCSS(markup) {
     document.head.appendChild(style);
 
     for (const rule of style.sheet.cssRules) {
-        rule.selectorText = rule.selectorText.trim().replaceAll(TYPE_REGEX, '')
+        rule.selectorText = rule.selectorText.trim().replaceAll(ARGUMENT_REGEX, '')
     }
 
     return style.sheet.cssRules;
