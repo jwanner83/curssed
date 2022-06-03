@@ -28,7 +28,7 @@
     content: "cssed";
 }
 
-.wrapper .content .message[p] {
+.wrapper .content .message[a][href="https://github.com/jwanner83/cssed/"][target="_blank"] {
     color: #6a6a6a;
     margin-bottom: 0;
     font-size: 16px;
