@@ -1,6 +1,13 @@
-import { renderFile } from '../src/cssed.js'
+import { render } from '../package/dist/mod.js'
 
-renderFile(
+render(
   document.body,
-  'content.css'
+  {
+    markup: {
+      file: 'content.css'
+    },
+    css: {
+      file: 'reset.css'
+    }
+  }
 ).then()
