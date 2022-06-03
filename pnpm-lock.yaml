@@ -6,11 +6,9 @@ importers:
     specifiers:
       prettier: ^2.6.2
       prettier-plugin-organize-imports: ^2.3.4
-      typescript: ^4.7.2
     devDependencies:
       prettier: 2.6.2
-      prettier-plugin-organize-imports: 2.3.4_lbsuufegg2dnc4wh6qgf26kgdy
-      typescript: 4.7.2
+      prettier-plugin-organize-imports: 2.3.4_prettier@2.6.2
 
   package:
     specifiers:
@@ -429,14 +427,13 @@ packages:
     engines: {node: '>=8.6'}
     dev: true
 
-  /prettier-plugin-organize-imports/2.3.4_lbsuufegg2dnc4wh6qgf26kgdy:
+  /prettier-plugin-organize-imports/2.3.4_prettier@2.6.2:
     resolution: {integrity: sha512-R8o23sf5iVL/U71h9SFUdhdOEPsi3nm42FD/oDYIZ2PQa4TNWWuWecxln6jlIQzpZTDMUeO1NicJP6lLn2TtRw==}
     peerDependencies:
       prettier: '>=2.0'
       typescript: '>=2.9'
     dependencies:
       prettier: 2.6.2
-      typescript: 4.7.2
     dev: true
 
   /prettier/2.6.2:
