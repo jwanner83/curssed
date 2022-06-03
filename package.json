@@ -1,0 +1,13 @@
+{
+  "private": true,
+  "author": "Jonas Wanner",
+  "license": "MIT",
+  "scripts": {
+    "format": "prettier --write .",
+    "dev": "pnpm run dev --filter=./ --parallel"
+  },
+  "devDependencies": {
+    "prettier": "^2.6.2",
+    "prettier-plugin-organize-imports": "^2.3.4"
+  }
+}
