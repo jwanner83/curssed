@@ -1,6 +1,8 @@
 node_modules
 .idea
+bin
 dist
 .rollup.cache
 tsconfig.tsbuildinfo
 .rpt2_cache
+.pnpm-debug.log
