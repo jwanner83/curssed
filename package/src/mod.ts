@@ -12,8 +12,10 @@ export async function initialization({
   try {
     const markup = await inputHandler.resolveContent(options.markup)
     const curssed = styleHandler.getRules(markup)
-    const ast = astHandler.resolveAST(curssed)
-    const node = astHandler.convertASTToNode(ast)
+    const { body, head } = astHandler.resolveAST(curssed)
+
+    const bodyNode = astHandler.convertASTToNode(body)
+    const headNode = astHandler.convertASTToNode(head)
 
     document.head.appendChild(styleHandler.renderCSS(markup))
     if (options.css) {
@@ -21,7 +23,8 @@ export async function initialization({
       document.head.appendChild(styleHandler.renderCSS(css))
     }
 
-    element.appendChild(node)
+    headNode.childNodes.forEach(child => document.head.appendChild(child))
+    element.appendChild(bodyNode)
   } catch (error) {
     errorHandler.handleError(error.message)
   }
