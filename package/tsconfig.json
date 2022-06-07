@@ -1,19 +1,13 @@
 {
   "compilerOptions": {
+    "moduleResolution": "node",
     "declaration": true,
     "declarationDir": "types",
     "emitDeclarationOnly": true,
     "target": "esnext",
-    "lib": [
-      "dom",
-      "esnext"
-    ],
+    "lib": ["dom", "esnext"],
     "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "**/*.ts"
-  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
 }
