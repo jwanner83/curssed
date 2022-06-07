@@ -35,25 +35,28 @@ export default class StyleHandler {
    * @param css
    */
   public renderCSS(css: string) {
-    let edited = '' + css
+    const raw = this.document.createElement('style')
+    raw.innerHTML = css
+    this.virtual.head.appendChild(raw)
 
-    const temp = this.document.createElement('style')
-    temp.innerHTML = css
-    this.virtual.head.appendChild(temp)
+    const work = this.virtual.createElement('style')
+    work.innerHTML = ''
+    this.virtual.head.appendChild(work)
 
-    for (const rule of Array.from(temp.sheet.cssRules) as CSSStyleRule[]) {
+    for (const rule of Array.from(raw.sheet.cssRules) as CSSStyleRule[]) {
       if (!rule.selectorText.startsWith('::before')) {
-        edited = edited.replace(
+        work.sheet.insertRule(rule.cssText.replace(
           rule.selectorText,
           StyleHandler.getCleanedSelector(rule.selectorText)
-        )
+        ))
       }
     }
 
-    const style = this.virtual.createElement('style')
-    style.innerHTML = edited
+    const rules = (Array.from(work.sheet.cssRules) as CSSStyleRule[]).map(rule => rule.cssText)
+    const clean = this.virtual.createElement('style')
+    clean.innerHTML = rules.join(' ')
 
-    return style
+    return clean
   }
 
   /**
