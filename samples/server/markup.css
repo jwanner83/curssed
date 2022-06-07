@@ -1,0 +1,143 @@
+.wrapper {
+  height: 100%;
+  width: 100%;
+  background: black;
+}
+
+.wrapper .content {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 80px 30px 30px;
+  font-family: monospace;
+}
+
+.wrapper .content .header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wrapper .content .header .intro {
+}
+
+.wrapper .content .header .intro #title[h1] {
+  color: white;
+  margin-top: 2px;
+  margin-bottom: 8px;
+  font-size: 50px;
+  content: 'curssed';
+}
+
+.wrapper .content .header .intro .message[a][href="https://github.com/jwanner83/curssed/"][target="_blank"]
+{
+  color: #9b9b9b;
+  margin-bottom: 0;
+  margin-left: 2px;
+  font-size: 16px;
+  line-height: 22px;
+  content: 'the complete css framework';
+  text-decoration: none;
+}
+
+.wrapper .content .header .github[a][href="https://github.com/jwanner83/curssed/"][target="_blank"]
+{
+  position: relative;
+  width: 60px;
+  height: 60px;
+}
+
+.wrapper
+  .content
+  .header
+  .github
+  .image[img][src='assets/github.png'][alt='GitHub'] {
+  width: 100%;
+  height: 100%;
+}
+
+.wrapper .content .sub[h2] {
+  color: white;
+  margin-top: 40px;
+  content: 'description';
+}
+
+.wrapper .content .text[p] {
+  color: #9b9b9b;
+  line-height: 20px;
+  content: 'a framework for creating web experiences without knowing any other language than valid css. ';
+}
+
+.wrapper .content .sub[h2] {
+  content: 'quick start';
+}
+
+.wrapper .content .code {
+  margin-top: 18px;
+  background: #2d2d2d;
+  border-radius: 5px;
+  padding: 16px;
+  color: white;
+}
+
+.wrapper .content .code .first {
+  content: "import { render } from './curssed.js'";
+}
+
+.wrapper .content .code .first {
+  content: '<br><br>render(document.body, {<br>';
+}
+
+.wrapper .content .code .second {
+  margin-left: 20px;
+  content: 'markup: {<br>';
+}
+
+.wrapper .content .code .third {
+  margin-left: 40px;
+  content: 'content: \'.text[p] { content: "hello world"; color: red; }\'';
+}
+
+.wrapper .content .code .second {
+  content: '}<br>';
+}
+
+.wrapper .content .code .first {
+  content: '}).then()';
+}
+
+.wrapper .content .sub[h2] {
+  content: 'documentation';
+}
+
+.wrapper .content .button[a][href="https://github.com/jwanner83/curssed#usage"][target="_blank"]
+{
+  background: white;
+  color: black;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 20px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.wrapper .content .button .label[p] {
+  content: 'visit the documentation';
+  margin: 0;
+}
+
+.wrapper .content .button .arrow[img][src='assets/arrow.png'][alt='Arrow'] {
+  width: 30px;
+  height: 30px;
+}
+
+.wrapper .content .sub[h2] {
+  content: 'meme';
+}
+
+.wrapper .content .meme[img][src='assets/meme.jpg'][alt='meme'] {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
