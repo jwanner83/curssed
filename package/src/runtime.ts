@@ -1,8 +1,8 @@
-import ASTHandlerRuntime from './handler/ASTHandler'
-import StyleHandlerRuntime from './handler/StyleHandler'
+import ASTHandlerRuntime from './handlers/ASTHandler'
+import StyleHandlerRuntime from './handlers/StyleHandler'
 import { initialization } from './mod'
-import ErrorHandlerRuntime from './runtime/ErrorHandlerRuntime'
-import InputHandlerRuntime from './runtime/InputHandlerRuntime'
+import ErrorHandlerRuntime from './handlers/runtime/ErrorHandlerRuntime'
+import InputHandlerRuntime from './handlers/runtime/InputHandlerRuntime'
 import { CurssedRenderOptions } from './types/Curssed.types'
 
 export async function render(

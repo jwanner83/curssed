@@ -3,7 +3,7 @@ import { copy } from 'fs-extra'
 import { mkdir, readFile, writeFile } from 'fs/promises'
 import pretty from 'pretty'
 import { name, version } from '../package.json'
-import LogHandler from './handler/LogHandler'
+import LogHandler from './handlers/LogHandler'
 import { render } from './server'
 import { CurssedRenderOptions } from './types/Curssed.types'
 

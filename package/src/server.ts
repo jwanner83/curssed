@@ -1,9 +1,9 @@
 import { JSDOM } from 'jsdom'
-import ASTHandlerServer from './handler/ASTHandler'
-import StyleHandlerServer from './handler/StyleHandler'
+import ASTHandlerServer from './handlers/ASTHandler'
+import StyleHandlerServer from './handlers/StyleHandler'
 import { initialization } from './mod'
-import ErrorHandlerServer from './server/ErrorHandlerServer'
-import InputHandlerServer from './server/InputHandlerServer'
+import ErrorHandlerServer from './handlers/server/ErrorHandlerServer'
+import InputHandlerServer from './handlers/server/InputHandlerServer'
 import { CurssedRenderOptions } from './types/Curssed.types'
 
 export async function render(

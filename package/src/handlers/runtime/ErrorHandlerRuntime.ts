@@ -1,5 +1,5 @@
-import ErrorHandler from '../interfaces/ErrorHandler'
-import { render } from '../runtime'
+import ErrorHandler from '../../interfaces/ErrorHandler'
+import { render } from '../../runtime'
 
 export default class ErrorHandlerRuntime implements ErrorHandler {
   /**
