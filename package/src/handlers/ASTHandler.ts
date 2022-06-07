@@ -1,6 +1,5 @@
 import CurssedError from '../exceptions/CurssedError'
 import AST from '../models/AST'
-import { CurssedASTLocation } from '../types/AST.types'
 
 export default class ASTHandler {
   /**
@@ -43,7 +42,6 @@ export default class ASTHandler {
       }
 
       if (ASTHandler.isHeadSelector(selectorText)) {
-        child.location = CurssedASTLocation.head
         child.type = ASTHandler.getType(selectorText)
         child.attributes = ASTHandler.getAttributes(selectorText)
 
