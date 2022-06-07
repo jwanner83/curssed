@@ -1,3 +1,23 @@
+::before[meta][charset="UTF-8"] {}
+
+::before[title] {
+  content: "curssed - the complete css framework";
+}
+
+::before[meta][name="title"][content="curssed - the complete css framework"] {}
+::before[meta][name="description"][content="a framework for creating web experiences without knowing any other language than valid css."] {}
+
+::before[meta][property="og:type"][content="website"] {}
+::before[meta][property="og:url"][content="https://curssed.wanner.work/"] {}
+::before[meta][property="og:description"][content="a framework for creating web experiences without knowing any other language than valid css."] {}
+::before[meta][property="og:image"][content="https://curssed.wanner.work/assets/social.png"] {}
+
+::before[meta][property="twitter:card"][content="summary_large_image"] {}
+::before[meta][property="twitter:url"][content="https://curssed.wanner.work/"] {}
+::before[meta][property="twitter:title"][content="curssed - the complete css framework"] {}
+::before[meta][property="twitter:description"][content="a framework for creating web experiences without knowing any other language than valid css."] {}
+::before[meta][property="twitter:image"][content="https://curssed.wanner.work/assets/social.png"] {}
+
 .wrapper {
   height: 100%;
   width: 100%;
@@ -140,4 +160,5 @@
   width: 100%;
   height: 250px;
   object-fit: cover;
+  border-radius: 5px;
 }
