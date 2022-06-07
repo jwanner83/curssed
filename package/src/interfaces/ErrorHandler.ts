@@ -4,5 +4,5 @@ export default interface ErrorHandler {
    * @param title
    * @param message
    */
-  displayError(message, title): void
+  displayError(message, title?): void
 }

@@ -1,5 +1,3 @@
-import ASTHandlerRuntime from './ASTHandler'
-
 export default interface StyleHandler {
   /**
    * Reads the input options and returns the content.
