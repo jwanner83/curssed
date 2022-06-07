@@ -1,9 +1,9 @@
 import commonjs from '@rollup/plugin-commonjs'
 import json from '@rollup/plugin-json'
 import typescript from '@rollup/plugin-typescript'
-import copy from 'rollup-plugin-copy'
 import del from 'rollup-plugin-delete'
 import dts from 'rollup-plugin-dts'
+import { terser } from 'rollup-plugin-terser'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -11,28 +11,26 @@ const config = [
   {
     input: 'src/runtime.ts',
     plugins: [
-      typescript({ tsconfig: './tsconfig.json', outputToFilesystem: false }),
-      copy({
-        targets: [{ src: 'dist/curssed.runtime.js', dest: '../docs/runtime' }]
-      })
+      typescript({ tsconfig: './tsconfig.json' }),
+      terser()
     ],
     output: {
       file: 'dist/curssed.runtime.js',
-      format: 'esm'
+      format: 'esm',
+      compact: true
     }
   },
   {
     input: 'src/server.ts',
     plugins: [
       commonjs(),
-      typescript({ tsconfig: './tsconfig.json', outputToFilesystem: false }),
-      copy({
-        targets: [{ src: 'dist/curssed.server.js', dest: '../docs/server' }]
-      })
+      typescript({ tsconfig: './tsconfig.json' }),
+      terser()
     ],
     output: {
       file: 'dist/curssed.server.js',
-      format: 'cjs'
+      format: 'cjs',
+      compact: true
     },
     external: ['fs', 'util', 'jsdom']
   },
@@ -41,15 +39,18 @@ const config = [
     plugins: [
       commonjs(),
       json(),
-      typescript({ tsconfig: './tsconfig.json', outputToFilesystem: false })
+      typescript({ tsconfig: './tsconfig.json', outputToFilesystem: false }),
+      terser()
     ],
     output: {
       file: 'bin/curssed.js',
       format: 'cjs',
-      banner: '#!/usr/bin/env node'
+      banner: '#!/usr/bin/env node',
+      compact: true
     },
     external: [
       'arg',
+      'fs-extra',
       'fs/promises',
       'jsdom',
       'chalk',

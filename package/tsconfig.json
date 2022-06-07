@@ -8,8 +8,7 @@
     "lib": ["dom", "esnext"],
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "allowSyntheticDefaultImports": true,
-    "strictNullChecks": false
+    "allowSyntheticDefaultImports": true
   },
   "esModuleInterop": true,
   "include": ["**/*.ts"],
