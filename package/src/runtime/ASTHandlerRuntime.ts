@@ -1,22 +1,15 @@
 import AST from '../models/AST'
 import CurssedError from '../exceptions/CurssedError'
+import ASTHandler from '../interfaces/ASTHandler'
 
-export default class ASTHandler {
-  /**
-   * Regex to get the arguments of a selector.
-   * @private
-   */
+export default class ASTHandlerRuntime implements ASTHandler {
   public static ARGUMENT_REGEX = /\[.*]/g
 
-  /**
-   * Reads the input options and returns the content.
-   * @param rules
-   */
   public resolveAST(rules: CSSRuleList): AST {
     const ast = new AST('#root', 'main')
 
     for (const rule of Array.from(rules) as CSSStyleRule[]) {
-      if (ASTHandler.isIgnorableSelector(rule.selectorText)) {
+      if (ASTHandlerRuntime.isIgnorableSelector(rule.selectorText)) {
         continue
       }
 
@@ -27,14 +20,14 @@ export default class ASTHandler {
         child.setContent(rule)
       }
 
-      const elements = ASTHandler.getElementsFromSelector(rule.selectorText)
+      const elements = ASTHandlerRuntime.getElementsFromSelector(rule.selectorText)
 
       elements.forEach((element, index) => {
-        const name = ASTHandler.getName(element)
+        const name = ASTHandlerRuntime.getName(element)
 
         if (index ===  elements.length - 1) {
-          child.attributes = ASTHandler.getAttributes(element)
-          child.type = ASTHandler.getType(element)
+          child.attributes = ASTHandlerRuntime.getAttributes(element)
+          child.type = ASTHandlerRuntime.getType(element)
         } else {
           const parent = current.children.find(child => child.name === name)
 
@@ -46,7 +39,7 @@ export default class ASTHandler {
         }
       })
 
-      child.name = ASTHandler.getName(elements[elements.length - 1])
+      child.name = ASTHandlerRuntime.getName(elements[elements.length - 1])
       current.children.push(child)
     }
 
@@ -58,7 +51,7 @@ export default class ASTHandler {
    * @param ast
    */
   public convertASTToNode(ast: AST): HTMLElement {
-    return ASTHandler.getNodeFromAST(ast)
+    return ASTHandlerRuntime.getNodeFromAST(ast)
   }
 
   /**
@@ -87,7 +80,7 @@ export default class ASTHandler {
 
     if (ast.children) {
       for (const child of ast.children) {
-        node.appendChild(ASTHandler.getNodeFromAST(child))
+        node.appendChild(ASTHandlerRuntime.getNodeFromAST(child))
       }
     }
 
@@ -124,7 +117,7 @@ export default class ASTHandler {
    * @private
    */
   private static getType(element: string): string {
-    const match = element.match(ASTHandler.ARGUMENT_REGEX)
+    const match = element.match(ASTHandlerRuntime.ARGUMENT_REGEX)
     if (match && match[0]) {
       return  match[0].split(']')[0].slice(1)
     } else {
@@ -139,7 +132,7 @@ export default class ASTHandler {
    */
   private static getAttributes(element: string): Map<string, string> {
     const attributes = new Map<string, string>()
-    const match = element.match(ASTHandler.ARGUMENT_REGEX)
+    const match = element.match(ASTHandlerRuntime.ARGUMENT_REGEX)
 
     if (match && match[0]) {
       const split = match[0].split(']')

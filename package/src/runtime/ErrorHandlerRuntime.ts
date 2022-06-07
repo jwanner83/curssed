@@ -1,6 +1,7 @@
-import { render } from '../mod'
+import { render } from '../runtime'
+import ErrorHandler from '../interfaces/ErrorHandler'
 
-export default class ErrorHandler {
+export default class ErrorHandlerRuntime implements ErrorHandler {
 
   /**
    * The default error message title
@@ -13,7 +14,7 @@ export default class ErrorHandler {
    * @param title
    * @param message
    */
-  public displayError(message, title = ErrorHandler.DEFAULT_TITLE) {
+  public displayError(message, title = ErrorHandlerRuntime.DEFAULT_TITLE) {
     render(
       document.body,
       {
@@ -43,14 +44,14 @@ export default class ErrorHandler {
             .wrapper .content .title[h1] {
                 color: red;
                 margin-top: 8px;
-                content: "${ErrorHandler.getValidContent(title)}";
+                content: "${ErrorHandlerRuntime.getValidContent(title)}";
             }
             
             .wrapper .content .message[p] {
                 color: #ff6565;
                 margin-bottom: 0;
                 line-height: 24px;
-                content: "${ErrorHandler.getValidContent(message)}";
+                content: "${ErrorHandlerRuntime.getValidContent(message)}";
             }
             `
         }

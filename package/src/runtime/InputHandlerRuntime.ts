@@ -1,25 +1,22 @@
 import { CurssedInputOptions } from '../types/Curssed.types'
 import CurssedError from '../exceptions/CurssedError'
+import InputHandler from '../interfaces/InputHandler'
 
-export default class InputHandler {
-  /**
-   * Reads the input options and returns the content.
-   * @param input
-   */
+export default class InputHandlerRuntime implements InputHandler {
   async resolveContent(input: CurssedInputOptions): Promise<string> {
     if (input.content && input.file) {
       throw new CurssedError('you can only provide either a content or a file input and not both at the same time.')
     }
 
     if (input.file) {
-      return InputHandler.readFile(input.file)
+      return InputHandlerRuntime.readFile(input.file)
     } else {
       return input.content
     }
   }
 
   /**
-   * Reads the file and returns the content.
+   * Reads the file with window.fetch and returns the content.
    * @param file
    * @private
    */
