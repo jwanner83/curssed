@@ -1,5 +1,6 @@
 import CurssedError from '../exceptions/CurssedError'
 import AST from '../models/AST'
+import { CurssedASTLocation } from '../types/AST.types'
 
 export default class ASTHandler {
   /**
@@ -21,28 +22,42 @@ export default class ASTHandler {
    * Reads the input options and returns the content.
    * @param rules
    */
-  public resolveAST(rules: CSSRuleList): AST {
-    const ast = new AST('#root', 'main')
+  public resolveAST(rules: CSSRuleList): { body: AST, head: AST } {
+    const body = new AST('#root', 'main')
+    const head = new AST('#head', 'head')
 
     for (const rule of Array.from(rules) as CSSStyleRule[]) {
-      if (ASTHandler.isIgnorableSelector(rule.selectorText)) {
-        continue
-      }
-
       const selectorText = rule.selectorText
         .replace(/(\r\n|\n|\r)/gm, '')
         .replaceAll('  ', ' ')
 
-      let current = ast
+      if (ASTHandler.isIgnorableSelector(rule.selectorText)) {
+        continue
+      }
+
+      let current = body
       const child = AST.createEmpty()
 
       if (rule.style.content) {
         child.setContent(rule)
       }
 
+      if (ASTHandler.isHeadSelector(selectorText)) {
+        child.location = CurssedASTLocation.head
+        child.type = ASTHandler.getType(selectorText)
+        child.attributes = ASTHandler.getAttributes(selectorText)
+
+        head.children.push(child)
+        continue
+      }
+
       const elements = ASTHandler.getElementsFromSelector(selectorText)
 
       elements.forEach((element, index) => {
+        if (ASTHandler.isHeadSelector(selectorText)) {
+          throw new CurssedError(`the head declaration '::before' can only appear at top level and cannot be nested.`)
+        }
+
         const name = ASTHandler.getName(element)
 
         if (index === elements.length - 1) {
@@ -65,7 +80,7 @@ export default class ASTHandler {
       current.children.push(child)
     }
 
-    return ast
+    return { body, head }
   }
 
   /**
@@ -117,6 +132,15 @@ export default class ASTHandler {
    */
   private static isIgnorableSelector(selector: string): boolean {
     return selector === 'body' || selector === 'html' || selector === '#root'
+  }
+
+  /**
+   * Checks if the selector is a head selector.
+   * @param selector
+   * @private
+   */
+  private static isHeadSelector(selector: string): boolean {
+    return selector.startsWith('::before')
   }
 
   /**
