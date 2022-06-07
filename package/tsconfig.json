@@ -6,8 +6,12 @@
     "emitDeclarationOnly": true,
     "target": "esnext",
     "lib": ["dom", "esnext"],
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": false,
   },
+  "esModuleInterop": true,
   "include": ["**/*.ts"],
   "exclude": ["node_modules"]
 }
