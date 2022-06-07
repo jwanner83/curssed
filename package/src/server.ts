@@ -7,23 +7,25 @@ import { initialization } from './mod'
 import { JSDOM } from 'jsdom'
 
 export async function render(
-  element: HTMLElement,
-  options: CurssedRenderOptions
-) {
+  options: CurssedRenderOptions,
+  initialDom = '',
+): Promise<string> {
   const errorHandler = new ErrorHandlerServer()
   const inputHandler = new InputHandlerServer()
   const styleHandler = new StyleHandlerServer()
   const astHandler = new ASTHandlerServer()
 
-  const { document } = (new JSDOM()).window
+  const dom = (new JSDOM(initialDom))
 
   await initialization({
     astHandler,
     errorHandler,
     inputHandler,
     styleHandler,
-    document,
+    document: dom.window.document,
     options,
-    element
+    element: dom.window.document.body
   })
+
+  return dom.serialize()
 }
