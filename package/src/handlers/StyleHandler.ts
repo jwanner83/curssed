@@ -2,13 +2,20 @@ import ASTHandler from './ASTHandler'
 
 export default class StyleHandler {
   /**
-   * Document to create style nodes.
+   * The actual document.
    * @private
    */
   private document: Document
 
-  constructor(document: Document) {
+  /**
+   * A virtual document to create style nodes.
+   * @private
+   */
+  private virtual: Document
+
+  constructor(document: Document, virtual: Document) {
     this.document = document
+    this.virtual = virtual
   }
 
   /**
@@ -16,9 +23,9 @@ export default class StyleHandler {
    * @param css
    */
   public getRules(css: string): CSSRuleList {
-    const style = this.document.createElement('style')
+    const style = this.virtual.createElement('style')
     style.textContent = css
-    this.document.body.appendChild(style)
+    this.virtual.head.appendChild(style)
 
     return style.sheet.cssRules
   }
@@ -32,16 +39,18 @@ export default class StyleHandler {
 
     const temp = this.document.createElement('style')
     temp.innerHTML = css
-    this.document.head.appendChild(temp)
+    this.virtual.head.appendChild(temp)
 
     for (const rule of Array.from(temp.sheet.cssRules) as CSSStyleRule[]) {
-      edited = edited.replace(
-        rule.selectorText,
-        StyleHandler.getCleanedSelector(rule.selectorText)
-      )
+      if (!rule.selectorText.startsWith('::before')) {
+        edited = edited.replace(
+          rule.selectorText,
+          StyleHandler.getCleanedSelector(rule.selectorText)
+        )
+      }
     }
 
-    const style = this.document.createElement('style')
+    const style = this.virtual.createElement('style')
     style.innerHTML = edited
 
     return style
