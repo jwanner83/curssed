@@ -1,7 +1,7 @@
-import ASTHandler from '../interfaces/ASTHandler'
+import ASTHandler from '../handler/ASTHandler'
+import StyleHandler from '../handler/StyleHandler'
 import ErrorHandler from '../interfaces/ErrorHandler'
 import InputHandler from '../interfaces/InputHandler'
-import StyleHandler from '../interfaces/StyleHandler'
 
 export interface CurssedRenderOptions {
   /**
@@ -29,11 +29,38 @@ export interface CurssedInputOptions {
 }
 
 export interface CurssedInitializationOptions {
+  /**
+   * The ast handler
+   */
   astHandler: ASTHandler
+
+  /**
+   * The error handler either runtime or server
+   */
   errorHandler: ErrorHandler
+
+  /**
+   * The input handler either runtime or server
+   */
   inputHandler: InputHandler
+
+  /**
+   * The style handler
+   */
   styleHandler: StyleHandler
-  document: Document,
+
+  /**
+   * The document instance
+   */
+  document: Document
+
+  /**
+   * The curssed render options
+   */
   options: CurssedRenderOptions
+
+  /**
+   * The curssed root element
+   */
   element: HTMLElement
 }

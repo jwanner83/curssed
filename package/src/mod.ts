@@ -23,6 +23,6 @@ export async function initialization({
 
     element.appendChild(node)
   } catch (error) {
-    errorHandler.displayError(error.message)
+    errorHandler.handleError(error.message)
   }
 }

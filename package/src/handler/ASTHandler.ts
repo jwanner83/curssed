@@ -1,20 +1,37 @@
 import CurssedError from '../exceptions/CurssedError'
-import ASTHandler from '../interfaces/ASTHandler'
 import AST from '../models/AST'
-import { JSDOM } from 'jsdom'
 
-export default class ASTHandlerServer implements ASTHandler {
+export default class ASTHandler {
+  /**
+   * Document to create style nodes.
+   * @private
+   */
+  private document: Document
+
+  constructor(document: Document) {
+    this.document = document
+  }
+
+  /**
+   * Regex to get the arguments
+   */
   public static ARGUMENT_REGEX = /\[.*]/g
 
+  /**
+   * Reads the input options and returns the content.
+   * @param rules
+   */
   public resolveAST(rules: CSSRuleList): AST {
     const ast = new AST('#root', 'main')
 
     for (const rule of Array.from(rules) as CSSStyleRule[]) {
-      if (ASTHandlerServer.isIgnorableSelector(rule.selectorText)) {
+      if (ASTHandler.isIgnorableSelector(rule.selectorText)) {
         continue
       }
 
-      const selectorText = rule.selectorText.replace(/(\r\n|\n|\r)/gm, '').replaceAll('  ', ' ')
+      const selectorText = rule.selectorText
+        .replace(/(\r\n|\n|\r)/gm, '')
+        .replaceAll('  ', ' ')
 
       let current = ast
       const child = AST.createEmpty()
@@ -23,16 +40,14 @@ export default class ASTHandlerServer implements ASTHandler {
         child.setContent(rule)
       }
 
-      const elements = ASTHandlerServer.getElementsFromSelector(
-        selectorText
-      )
+      const elements = ASTHandler.getElementsFromSelector(selectorText)
 
       elements.forEach((element, index) => {
-        const name = ASTHandlerServer.getName(element)
+        const name = ASTHandler.getName(element)
 
         if (index === elements.length - 1) {
-          child.attributes = ASTHandlerServer.getAttributes(element)
-          child.type = ASTHandlerServer.getType(element)
+          child.attributes = ASTHandler.getAttributes(element)
+          child.type = ASTHandler.getType(element)
         } else {
           const parent = current.children.find((child) => child.name === name)
 
@@ -46,7 +61,7 @@ export default class ASTHandlerServer implements ASTHandler {
         }
       })
 
-      child.name = ASTHandlerServer.getName(elements[elements.length - 1])
+      child.name = ASTHandler.getName(elements[elements.length - 1])
       current.children.push(child)
     }
 
@@ -58,7 +73,7 @@ export default class ASTHandlerServer implements ASTHandler {
    * @param ast
    */
   public convertASTToNode(ast: AST): HTMLElement {
-    return ASTHandlerServer.getNodeFromAST(ast)
+    return this.getNodeFromAST(ast)
   }
 
   /**
@@ -66,8 +81,8 @@ export default class ASTHandlerServer implements ASTHandler {
    * @param ast
    * @private
    */
-  private static getNodeFromAST(ast: AST): HTMLElement {
-    const node = (new JSDOM()).window.document.createElement(ast.type)
+  private getNodeFromAST(ast: AST): HTMLElement {
+    const node = this.document.createElement(ast.type)
 
     if (ast.name.startsWith('#')) {
       node.id = ast.name.slice(1)
@@ -87,7 +102,7 @@ export default class ASTHandlerServer implements ASTHandler {
 
     if (ast.children) {
       for (const child of ast.children) {
-        node.appendChild(ASTHandlerServer.getNodeFromAST(child))
+        node.appendChild(this.getNodeFromAST(child))
       }
     }
 
@@ -123,7 +138,7 @@ export default class ASTHandlerServer implements ASTHandler {
    * @private
    */
   private static getType(element: string): string {
-    const match = element.match(ASTHandlerServer.ARGUMENT_REGEX)
+    const match = element.match(ASTHandler.ARGUMENT_REGEX)
     if (match && match[0]) {
       return match[0].split(']')[0].slice(1)
     } else {
@@ -138,7 +153,7 @@ export default class ASTHandlerServer implements ASTHandler {
    */
   private static getAttributes(element: string): Map<string, string> {
     const attributes = new Map<string, string>()
-    const match = element.match(ASTHandlerServer.ARGUMENT_REGEX)
+    const match = element.match(ASTHandler.ARGUMENT_REGEX)
 
     if (match && match[0]) {
       const split = match[0].split(']')

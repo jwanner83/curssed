@@ -1,8 +1,8 @@
+import ASTHandlerRuntime from './handler/ASTHandler'
+import StyleHandlerRuntime from './handler/StyleHandler'
 import { initialization } from './mod'
-import ASTHandlerRuntime from './runtime/ASTHandlerRuntime'
 import ErrorHandlerRuntime from './runtime/ErrorHandlerRuntime'
 import InputHandlerRuntime from './runtime/InputHandlerRuntime'
-import StyleHandlerRuntime from './runtime/StyleHandlerRuntime'
 import { CurssedRenderOptions } from './types/Curssed.types'
 
 export async function render(
@@ -11,8 +11,8 @@ export async function render(
 ) {
   const errorHandler = new ErrorHandlerRuntime()
   const inputHandler = new InputHandlerRuntime()
-  const styleHandler = new StyleHandlerRuntime()
-  const astHandler = new ASTHandlerRuntime()
+  const styleHandler = new StyleHandlerRuntime(document)
+  const astHandler = new ASTHandlerRuntime(document)
 
   await initialization({
     astHandler,

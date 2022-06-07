@@ -8,7 +8,7 @@ enum LogType {
   error = 'Error'
 }
 
-export default class Logger {
+export default class LogHandler {
   private readonly step = 10
 
   private type: LogType = LogType.progress

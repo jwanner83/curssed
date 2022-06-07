@@ -8,7 +8,7 @@ export default class ErrorHandlerRuntime implements ErrorHandler {
    */
   private static DEFAULT_TITLE = 'failed to render'
 
-  public displayError(message, title = ErrorHandlerRuntime.DEFAULT_TITLE) {
+  public handleError(message, title = ErrorHandlerRuntime.DEFAULT_TITLE) {
     render(document.body, {
       markup: {
         content: `

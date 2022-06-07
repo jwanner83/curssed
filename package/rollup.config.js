@@ -1,9 +1,9 @@
+import commonjs from '@rollup/plugin-commonjs'
+import json from '@rollup/plugin-json'
 import typescript from '@rollup/plugin-typescript'
 import copy from 'rollup-plugin-copy'
 import del from 'rollup-plugin-delete'
 import dts from 'rollup-plugin-dts'
-import json from '@rollup/plugin-json'
-import commonjs from '@rollup/plugin-commonjs'
 
 const production = !process.env.ROLLUP_WATCH
 
@@ -34,11 +34,7 @@ const config = [
       file: 'dist/curssed.server.js',
       format: 'cjs'
     },
-    external: [
-      'fs',
-      'util',
-      'jsdom'
-    ]
+    external: ['fs', 'util', 'jsdom']
   },
   {
     input: 'src/cli.ts',
@@ -67,7 +63,10 @@ const config = [
 if (production) {
   config.push({
     input: 'dist/types/mod.d.ts',
-    plugins: [dts(), del({ targets: ['dist/types', 'dist/mod.d.ts'], hook: 'buildEnd' })],
+    plugins: [
+      dts(),
+      del({ targets: ['dist/types', 'dist/mod.d.ts'], hook: 'buildEnd' })
+    ],
     output: [
       {
         file: 'dist/curssed.d.ts',

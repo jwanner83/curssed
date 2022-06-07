@@ -1,15 +1,14 @@
-import StyleHandler from '../interfaces/StyleHandler'
-import ASTHandlerRuntime from './ASTHandlerRuntime'
+import ASTHandler from './ASTHandler'
 
-export default class StyleHandlerRuntime implements StyleHandler {
+export default class StyleHandler {
   /**
-   * Virtual document to create style nodes.
+   * Document to create style nodes.
    * @private
    */
-  private virtual
+  private document: Document
 
-  constructor() {
-    this.virtual = document.implementation.createHTMLDocument('')
+  constructor(document: Document) {
+    this.document = document
   }
 
   /**
@@ -17,9 +16,9 @@ export default class StyleHandlerRuntime implements StyleHandler {
    * @param css
    */
   public getRules(css: string): CSSRuleList {
-    const style = document.createElement('style')
+    const style = this.document.createElement('style')
     style.textContent = css
-    this.virtual.body.appendChild(style)
+    this.document.body.appendChild(style)
 
     return style.sheet.cssRules
   }
@@ -31,18 +30,18 @@ export default class StyleHandlerRuntime implements StyleHandler {
   public renderCSS(css: string) {
     let edited = '' + css
 
-    const temp = document.createElement('style')
+    const temp = this.document.createElement('style')
     temp.innerHTML = css
-    this.virtual.head.appendChild(temp)
+    this.document.head.appendChild(temp)
 
     for (const rule of Array.from(temp.sheet.cssRules) as CSSStyleRule[]) {
       edited = edited.replace(
         rule.selectorText,
-        StyleHandlerRuntime.getCleanedSelector(rule.selectorText)
+        StyleHandler.getCleanedSelector(rule.selectorText)
       )
     }
 
-    const style = document.createElement('style')
+    const style = this.document.createElement('style')
     style.innerHTML = edited
 
     return style
@@ -54,6 +53,6 @@ export default class StyleHandlerRuntime implements StyleHandler {
    * @private
    */
   private static getCleanedSelector(selector: string) {
-    return selector.trim().replaceAll(ASTHandlerRuntime.ARGUMENT_REGEX, '')
+    return selector.trim().replaceAll(ASTHandler.ARGUMENT_REGEX, '')
   }
 }
