@@ -7,7 +7,12 @@ export default class AST implements CurssedAST {
   attributes: Map<string, string>
   children: AST[]
 
-  constructor(name: string, type: string = 'div', content: string = '', attributes: Map<string, string> = new Map()) {
+  constructor(
+    name: string,
+    type: string = 'div',
+    content: string = '',
+    attributes: Map<string, string> = new Map()
+  ) {
     this.name = name
     this.type = type
     this.content = content
@@ -18,7 +23,7 @@ export default class AST implements CurssedAST {
   /**
    * Create empty AST node.
    */
-  public static createEmpty () {
+  public static createEmpty() {
     return new AST('')
   }
 
@@ -26,7 +31,7 @@ export default class AST implements CurssedAST {
    * Set the content of the node.
    * @param rule
    */
-  public setContent (rule: CSSStyleRule) {
+  public setContent(rule: CSSStyleRule) {
     this.content = rule.style.content.slice(1, -1)
   }
 }
