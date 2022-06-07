@@ -13,18 +13,13 @@ export default class InputHandlerServer implements InputHandler {
     }
 
     if (input.file) {
-      return InputHandlerServer.readFile(input.file)
+      return this.readFile(input.file)
     } else {
       return input.content
     }
   }
 
-  /**
-   * Reads the file with fs.readFile and returns the content.
-   * @param file
-   * @private
-   */
-  private static async readFile(file: string): Promise<string> {
+  async readFile(file: string): Promise<string> {
     try {
       const buffer = await promisify(readFile)(file)
       return buffer.toString()

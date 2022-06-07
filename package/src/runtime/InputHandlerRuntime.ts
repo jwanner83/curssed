@@ -11,18 +11,13 @@ export default class InputHandlerRuntime implements InputHandler {
     }
 
     if (input.file) {
-      return InputHandlerRuntime.readFile(input.file)
+      return this.readFile(input.file)
     } else {
       return input.content
     }
   }
 
-  /**
-   * Reads the file with window.fetch and returns the content.
-   * @param file
-   * @private
-   */
-  private static async readFile(file: string): Promise<string> {
+  async readFile(file: string): Promise<string> {
     const response = await fetch(file)
 
     if (!response.ok) {
