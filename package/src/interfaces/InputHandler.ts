@@ -6,4 +6,10 @@ export default interface InputHandler {
    * @param input
    */
   resolveContent(input: CurssedInputOptions): Promise<string>
+
+  /**
+   * Reads the file with fs.readFile and returns the content.
+   * @param file
+   */
+  readFile(file: string): Promise<string>
 }
