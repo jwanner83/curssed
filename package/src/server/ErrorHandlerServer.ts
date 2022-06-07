@@ -1,4 +1,5 @@
 import ErrorHandler from '../interfaces/ErrorHandler'
+import CurssedError from '../exceptions/CurssedError'
 
 export default class ErrorHandlerServer implements ErrorHandler {
   /**
@@ -8,6 +9,6 @@ export default class ErrorHandlerServer implements ErrorHandler {
   private static DEFAULT_TITLE = 'failed to render'
 
   public displayError(message, title = ErrorHandlerServer.DEFAULT_TITLE) {
-    console.error(`${title}: ${message}`)
+    throw new CurssedError(message)
   }
 }
