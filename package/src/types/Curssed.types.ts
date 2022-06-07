@@ -33,6 +33,7 @@ export interface CurssedInitializationOptions {
   errorHandler: ErrorHandler
   inputHandler: InputHandler
   styleHandler: StyleHandler
+  document: Document,
   options: CurssedRenderOptions
   element: HTMLElement
 }

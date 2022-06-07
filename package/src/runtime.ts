@@ -19,6 +19,7 @@ export async function render(
     errorHandler,
     inputHandler,
     styleHandler,
+    document,
     options,
     element
   })

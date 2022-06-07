@@ -5,6 +5,7 @@ export async function initialization({
   errorHandler,
   inputHandler,
   styleHandler,
+  document,
   options,
   element
 }: CurssedInitializationOptions) {
