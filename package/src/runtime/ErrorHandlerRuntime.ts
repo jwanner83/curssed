@@ -1,26 +1,17 @@
-import { render } from '../runtime'
 import ErrorHandler from '../interfaces/ErrorHandler'
+import { render } from '../runtime'
 
 export default class ErrorHandlerRuntime implements ErrorHandler {
-
   /**
    * The default error message title
    * @private
    */
   private static DEFAULT_TITLE = 'failed to render'
 
-  /**
-   * Displays an error message.
-   * @param title
-   * @param message
-   */
   public displayError(message, title = ErrorHandlerRuntime.DEFAULT_TITLE) {
-    render(
-      document.body,
-      {
-        markup: {
-          content:
-            `
+    render(document.body, {
+      markup: {
+        content: `
             .wrapper[div] {
                 position: fixed;
                 top: 0;
@@ -54,9 +45,8 @@ export default class ErrorHandlerRuntime implements ErrorHandler {
                 content: "${ErrorHandlerRuntime.getValidContent(message)}";
             }
             `
-        }
       }
-    ).then()
+    }).then()
   }
 
   /**

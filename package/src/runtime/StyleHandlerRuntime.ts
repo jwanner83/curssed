@@ -1,5 +1,5 @@
-import ASTHandlerRuntime from './ASTHandlerRuntime'
 import StyleHandler from '../interfaces/StyleHandler'
+import ASTHandlerRuntime from './ASTHandlerRuntime'
 
 export default class StyleHandlerRuntime implements StyleHandler {
   /**
@@ -36,7 +36,10 @@ export default class StyleHandlerRuntime implements StyleHandler {
     this.virtual.head.appendChild(temp)
 
     for (const rule of Array.from(temp.sheet.cssRules) as CSSStyleRule[]) {
-      edited = edited.replace(rule.selectorText, StyleHandlerRuntime.getCleanedSelector(rule.selectorText))
+      edited = edited.replace(
+        rule.selectorText,
+        StyleHandlerRuntime.getCleanedSelector(rule.selectorText)
+      )
     }
 
     const style = document.createElement('style')

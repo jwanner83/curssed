@@ -1,6 +1,6 @@
-import AST from '../models/AST'
 import CurssedError from '../exceptions/CurssedError'
 import ASTHandler from '../interfaces/ASTHandler'
+import AST from '../models/AST'
 
 export default class ASTHandlerRuntime implements ASTHandler {
   public static ARGUMENT_REGEX = /\[.*]/g
@@ -20,21 +20,25 @@ export default class ASTHandlerRuntime implements ASTHandler {
         child.setContent(rule)
       }
 
-      const elements = ASTHandlerRuntime.getElementsFromSelector(rule.selectorText)
+      const elements = ASTHandlerRuntime.getElementsFromSelector(
+        rule.selectorText
+      )
 
       elements.forEach((element, index) => {
         const name = ASTHandlerRuntime.getName(element)
 
-        if (index ===  elements.length - 1) {
+        if (index === elements.length - 1) {
           child.attributes = ASTHandlerRuntime.getAttributes(element)
           child.type = ASTHandlerRuntime.getType(element)
         } else {
-          const parent = current.children.find(child => child.name === name)
+          const parent = current.children.find((child) => child.name === name)
 
           if (parent) {
             current = parent
           } else {
-            throw new CurssedError(`the parent '${element}' was not found on line '${rule.selectorText}'. remember that the parent always has to be defined to be able to add a child to it.`)
+            throw new CurssedError(
+              `the parent '${element}' was not found on line '${rule.selectorText}'. remember that the parent always has to be defined to be able to add a child to it.`
+            )
           }
         }
       })
@@ -110,8 +114,7 @@ export default class ASTHandlerRuntime implements ASTHandler {
     return element.split('[')[0].trim()
   }
 
-
-    /**
+  /**
    * Get the type of the element.
    * @param element
    * @private
@@ -119,7 +122,7 @@ export default class ASTHandlerRuntime implements ASTHandler {
   private static getType(element: string): string {
     const match = element.match(ASTHandlerRuntime.ARGUMENT_REGEX)
     if (match && match[0]) {
-      return  match[0].split(']')[0].slice(1)
+      return match[0].split(']')[0].slice(1)
     } else {
       return 'div'
     }
