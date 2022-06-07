@@ -11,8 +11,13 @@
   ],
   "main": "dist/curssed.js",
   "types": "dist/curssed.d.ts",
+  "dependencies": {
+    "jsdom": "^19.0.0"
+  },
   "devDependencies": {
     "@rollup/plugin-typescript": "^8.3.2",
+    "@types/jsdom": "^16.2.14",
+    "@types/node": "^17.0.40",
     "rollup": "^2.75.5",
     "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-delete": "^2.0.0",
