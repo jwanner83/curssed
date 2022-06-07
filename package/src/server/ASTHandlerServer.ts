@@ -1,6 +1,7 @@
 import CurssedError from '../exceptions/CurssedError'
 import ASTHandler from '../interfaces/ASTHandler'
 import AST from '../models/AST'
+import { JSDOM } from 'jsdom'
 
 export default class ASTHandlerServer implements ASTHandler {
   public static ARGUMENT_REGEX = /\[.*]/g
@@ -13,6 +14,8 @@ export default class ASTHandlerServer implements ASTHandler {
         continue
       }
 
+      const selectorText = rule.selectorText.replace(/(\r\n|\n|\r)/gm, '').replaceAll('  ', ' ')
+
       let current = ast
       const child = AST.createEmpty()
 
@@ -21,7 +24,7 @@ export default class ASTHandlerServer implements ASTHandler {
       }
 
       const elements = ASTHandlerServer.getElementsFromSelector(
-        rule.selectorText
+        selectorText
       )
 
       elements.forEach((element, index) => {
@@ -64,7 +67,7 @@ export default class ASTHandlerServer implements ASTHandler {
    * @private
    */
   private static getNodeFromAST(ast: AST): HTMLElement {
-    const node = document.createElement(ast.type)
+    const node = (new JSDOM()).window.document.createElement(ast.type)
 
     if (ast.name.startsWith('#')) {
       node.id = ast.name.slice(1)
