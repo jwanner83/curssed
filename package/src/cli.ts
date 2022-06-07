@@ -1,6 +1,6 @@
 import arg from 'arg'
 import { copy } from 'fs-extra'
-import { mkdir, readFile, writeFile } from 'fs/promises'
+import { mkdir, writeFile } from 'fs/promises'
 import pretty from 'pretty'
 import { name, version } from '../package.json'
 import LogHandler from './handlers/LogHandler'
@@ -39,21 +39,12 @@ void (async () => {
       }
     }
 
-    let html = ''
-    try {
-      html = (await readFile('public/index.html')).toString()
-    } catch (error) {
-      log.error('failed to read index.html from public/index.html.')
-    }
-
     log.progress('rendering')
-    const dom = await render(options, html)
+    const dom = await render(options)
 
     log.progress('writing output')
     await mkdir('dist', { recursive: true })
-    await copy('public', 'dist', {
-      filter: (src) => src !== 'index.html'
-    })
+    await copy('public', 'dist')
     await writeFile('dist/index.html', pretty(dom), { flag: 'w+' })
 
     log.success('bundler done. the folder `dist` is ready for deployment.')
