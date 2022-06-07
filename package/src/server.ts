@@ -8,13 +8,12 @@ import { CurssedRenderOptions } from './types/Curssed.types'
 
 export async function render(
   options: CurssedRenderOptions,
-  initialDom = ''
 ): Promise<string> {
-  const dom = new JSDOM(initialDom)
+  const dom = new JSDOM()
 
   const errorHandler = new ErrorHandlerServer()
   const inputHandler = new InputHandlerServer()
-  const styleHandler = new StyleHandlerServer(dom.window.document)
+  const styleHandler = new StyleHandlerServer(dom.window.document, (new JSDOM()).window.document)
   const astHandler = new ASTHandlerServer(dom.window.document)
 
   await initialization({

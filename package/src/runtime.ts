@@ -11,7 +11,7 @@ export async function render(
 ) {
   const errorHandler = new ErrorHandlerRuntime()
   const inputHandler = new InputHandlerRuntime()
-  const styleHandler = new StyleHandlerRuntime(document)
+  const styleHandler = new StyleHandlerRuntime(document, document.implementation.createHTMLDocument())
   const astHandler = new ASTHandlerRuntime(document)
 
   await initialization({
