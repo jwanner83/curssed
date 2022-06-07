@@ -11,26 +11,21 @@ a framework for creating web experiences without knowing any other language than
 ```js
 import { render } from 'curssed.js'
 
-render(
-  document.body,
-  {
-    markup: {
-      content:
-        `
+render(document.body, {
+  markup: {
+    content: `
         .content[p] {
           content: "hello world";
           color: red;
         }
         `
-    }
   }
-).then()
+}).then()
 ```
 
 ## example
 
 see the `/docs` folder for a code example or visit [the website](https://jwanner83.github.io/curssed/) to see it live in action.
-
 
 ## usage
 
@@ -41,7 +36,7 @@ see the `/docs` folder for a code example or visit [the website](https://jwanner
 3. add the following script tag to the `index.html` file:
 
 ```html
-<script src='index.js' type='module'></script>
+<script src="index.js" type="module"></script>
 ```
 
 4. import the `render` function from `curssed` inside the `index.js` file.
@@ -129,13 +124,13 @@ quotes instead of double to not break the system.
 
 ```css
 .title[h1] {
-    content: "hello world";
+  content: 'hello world';
 }
 ```
 
 ```css
 .content {
-    content: "<i class='test'>hello world</i>";
+  content: "<i class='test'>hello world</i>";
 }
 ```
 
@@ -145,17 +140,19 @@ you can set attributes to the html element by defining them after the type with 
 just add multiple brackets.
 
 ```css
-.image[img][src="https://i.imgflip.com/6i5g81.jpg"] {
-    object-fit: cover;
-    height: 200px;
-    width: 100%;
+.image[img][src="https://i.imgflip.com/6i5g81.jpg"]
+{
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
 }
 ```
 
 ```css
-.link[a][href="https://jwanner83.github.io/curssed/"][target="_blank"] {
-    object-fit: cover;
-    height: 200px;
-    width: 100%;
+.link[a][href="https://jwanner83.github.io/curssed/"][target="_blank"]
+{
+  object-fit: cover;
+  height: 200px;
+  width: 100%;
 }
 ```
