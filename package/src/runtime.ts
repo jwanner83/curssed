@@ -1,14 +1,14 @@
 import { CurssedRenderOptions } from './types/Curssed.types'
-import InputHandler from './handlers/InputHandler'
-import StyleHandler from './handlers/StyleHandler'
-import ASTHandler from './handlers/ASTHandler'
-import ErrorHandler from './handlers/ErrorHandler'
+import InputHandlerRuntime from './runtime/InputHandlerRuntime'
+import StyleHandlerRuntime from './runtime/StyleHandlerRuntime'
+import ASTHandlerRuntime from './runtime/ASTHandlerRuntime'
+import ErrorHandlerRuntime from './runtime/ErrorHandlerRuntime'
 
 export async function render (element: HTMLElement, options: CurssedRenderOptions) {
-  const errorHandler = new ErrorHandler()
-  const inputHandler = new InputHandler()
-  const styleHandler = new StyleHandler()
-  const astHandler = new ASTHandler()
+  const errorHandler = new ErrorHandlerRuntime()
+  const inputHandler = new InputHandlerRuntime()
+  const styleHandler = new StyleHandlerRuntime()
+  const astHandler = new ASTHandlerRuntime()
 
   try {
     const markup = await inputHandler.resolveContent(options.markup)
