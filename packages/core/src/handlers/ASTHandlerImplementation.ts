@@ -1,7 +1,8 @@
-import CurssedError from '../exceptions/CurssedError'
+import { ASTHandler, CurssedAST } from '@curssed/types'
+import { CurssedError } from '@curssed/exceptions'
 import AST from '../models/AST'
 
-export default class ASTHandler {
+export default class ASTHandlerImplementation implements ASTHandler {
   /**
    * Document to create style nodes.
    * @private
@@ -21,7 +22,7 @@ export default class ASTHandler {
    * Reads the input options and returns the content.
    * @param rules
    */
-  public resolveAST(rules: CSSRuleList): { body: AST, head: AST } {
+  public resolveAST(rules: CSSRuleList): { body: CurssedAST, head: CurssedAST } {
     const body = new AST('#root', 'main')
     const head = new AST('#head', 'head')
 
@@ -30,7 +31,7 @@ export default class ASTHandler {
         .replace(/(\r\n|\n|\r)/gm, '')
         .replaceAll('  ', ' ')
 
-      if (ASTHandler.isIgnorableSelector(rule.selectorText)) {
+      if (ASTHandlerImplementation.isIgnorableSelector(rule.selectorText)) {
         continue
       }
 
@@ -41,26 +42,26 @@ export default class ASTHandler {
         child.setContent(rule)
       }
 
-      if (ASTHandler.isHeadSelector(selectorText)) {
-        child.type = ASTHandler.getType(selectorText)
-        child.attributes = ASTHandler.getAttributes(selectorText)
+      if (ASTHandlerImplementation.isHeadSelector(selectorText)) {
+        child.type = ASTHandlerImplementation.getType(selectorText)
+        child.attributes = ASTHandlerImplementation.getAttributes(selectorText)
 
         head.children.push(child)
         continue
       }
 
-      const elements = ASTHandler.getElementsFromSelector(selectorText)
+      const elements = ASTHandlerImplementation.getElementsFromSelector(selectorText)
 
       elements.forEach((element, index) => {
-        if (ASTHandler.isHeadSelector(selectorText)) {
+        if (ASTHandlerImplementation.isHeadSelector(selectorText)) {
           throw new CurssedError(`the head declaration '::before' can only appear at top level and cannot be nested.`)
         }
 
-        const name = ASTHandler.getName(element)
+        const name = ASTHandlerImplementation.getName(element)
 
         if (index === elements.length - 1) {
-          child.attributes = ASTHandler.getAttributes(element)
-          child.type = ASTHandler.getType(element)
+          child.attributes = ASTHandlerImplementation.getAttributes(element)
+          child.type = ASTHandlerImplementation.getType(element)
         } else {
           const parent = current.children.find((child) => child.name === name)
 
@@ -74,7 +75,7 @@ export default class ASTHandler {
         }
       })
 
-      child.name = ASTHandler.getName(elements[elements.length - 1])
+      child.name = ASTHandlerImplementation.getName(elements[elements.length - 1])
       current.children.push(child)
     }
 
@@ -160,7 +161,7 @@ export default class ASTHandler {
    * @private
    */
   private static getType(element: string): string {
-    const match = element.match(ASTHandler.ARGUMENT_REGEX)
+    const match = element.match(ASTHandlerImplementation.ARGUMENT_REGEX)
     if (match && match[0]) {
       return match[0].split(']')[0].slice(1)
     } else {
@@ -175,7 +176,7 @@ export default class ASTHandler {
    */
   private static getAttributes(element: string): Map<string, string> {
     const attributes = new Map<string, string>()
-    const match = element.match(ASTHandler.ARGUMENT_REGEX)
+    const match = element.match(ASTHandlerImplementation.ARGUMENT_REGEX)
 
     if (match && match[0]) {
       const split = match[0].split(']')

@@ -1,6 +1,7 @@
-import ASTHandler from './ASTHandler'
+import ASTHandlerImplementation from './ASTHandlerImplementation'
+import { StyleHandler } from '@curssed/types'
 
-export default class StyleHandler {
+export default class StyleHandlerImplementation implements StyleHandler {
   /**
    * The actual document.
    * @private
@@ -18,10 +19,6 @@ export default class StyleHandler {
     this.virtual = virtual
   }
 
-  /**
-   * Reads the input options and returns the content.
-   * @param css
-   */
   public getRules(css: string): CSSRuleList {
     const style = this.virtual.createElement('style')
     style.textContent = css
@@ -30,10 +27,6 @@ export default class StyleHandler {
     return style.sheet.cssRules
   }
 
-  /**
-   * Get a style node from the given string.
-   * @param css
-   */
   public renderCSS(css: string) {
     const raw = this.document.createElement('style')
     raw.innerHTML = css
@@ -47,7 +40,7 @@ export default class StyleHandler {
       if (!rule.selectorText.startsWith('::before')) {
         work.sheet.insertRule(rule.cssText.replace(
           rule.selectorText,
-          StyleHandler.getCleanedSelector(rule.selectorText)
+          StyleHandlerImplementation.getCleanedSelector(rule.selectorText)
         ))
       }
     }
@@ -65,6 +58,6 @@ export default class StyleHandler {
    * @private
    */
   private static getCleanedSelector(selector: string) {
-    return selector.trim().replaceAll(ASTHandler.ARGUMENT_REGEX, '')
+    return selector.trim().replaceAll(ASTHandlerImplementation.ARGUMENT_REGEX, '')
   }
 }

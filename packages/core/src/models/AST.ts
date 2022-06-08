@@ -1,4 +1,4 @@
-import { CurssedAST } from '../types/AST.types'
+import { CurssedAST } from '@curssed/types'
 
 export default class AST implements CurssedAST {
   name: string

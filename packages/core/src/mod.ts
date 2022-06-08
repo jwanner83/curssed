@@ -1,6 +1,8 @@
-import { CurssedInitializationOptions } from './types/Curssed.types'
+import { CurssedInitializationOptions } from '@curssed/types'
+import ASTHandlerImplementation from './handlers/ASTHandlerImplementation'
+import StyleHandlerImplementation from './handlers/StyleHandlerImplementation'
 
-export async function initialization({
+async function initialization({
   astHandler,
   errorHandler,
   inputHandler,
@@ -28,4 +30,10 @@ export async function initialization({
   } catch (error) {
     errorHandler.handleError(error.message)
   }
+}
+
+export {
+  initialization,
+  StyleHandlerImplementation,
+  ASTHandlerImplementation
 }
