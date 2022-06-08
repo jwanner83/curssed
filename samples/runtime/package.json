@@ -1,6 +1,6 @@
 {
   "private": true,
   "dependencies": {
-    "curssed": "workspace:^"
+    "@curssed/runtime": "workspace:^"
   }
 }
