@@ -1,5 +1,5 @@
-import CurssedError from '../../exceptions/CurssedError'
-import ErrorHandler from '../../interfaces/ErrorHandler'
+import { ErrorHandler } from '@curssed/types'
+import { CurssedError } from '@curssed/exceptions'
 
 export default class ErrorHandlerServer implements ErrorHandler {
   /**
