@@ -4,8 +4,8 @@ import { mkdir, writeFile } from 'fs/promises'
 import pretty from 'pretty'
 import { name, version } from '../package.json'
 import LogHandler from './handlers/LogHandler'
-import { render } from './server'
-import { CurssedRenderOptions } from './types/Curssed.types'
+import { CurssedRenderOptions } from '@curssed/types'
+import { render } from '@curssed/compiler'
 
 void (async () => {
   const log = new LogHandler()

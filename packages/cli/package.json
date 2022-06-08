@@ -1,5 +1,5 @@
 {
-  "name": "curssed",
+  "name": "@curssed/cli",
   "version": "1.0.0",
   "author": "Jonas Wanner",
   "scripts": {
@@ -7,15 +7,14 @@
     "dev": "rollup -c --watch"
   },
   "files": [
-    "dist/*",
     "bin/*"
   ],
-  "main": "dist/curssed.server.js",
-  "types": "dist/curssed.d.ts",
   "bin": {
-    "curssed": "bin/curssed.js"
+    "curssed": "bin/curssed.cli.js"
   },
   "dependencies": {
+    "@curssed/compiler": "workspace:^",
+    "@curssed/types": "workspace:^",
     "arg": "^5.0.2",
     "fs-extra": "^10.1.0",
     "jsdom": "^19.0.0",
