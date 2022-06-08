@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "moduleResolution": "node",
+    "declaration": true,
+    "declarationDir": "types",
+    "emitDeclarationOnly": true,
+    "target": "esnext",
+    "lib": ["dom", "esnext"],
+    "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "esModuleInterop": true,
+  "include": ["**/*.ts"],
+  "exclude": ["node_modules"]
+}

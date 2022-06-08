@@ -1,0 +1,24 @@
+{
+  "name": "@curssed/exceptions",
+  "version": "1.0.0",
+  "author": "Jonas Wanner",
+  "scripts": {
+    "build": "rollup -c",
+    "dev": "rollup -c --watch"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "main": "dist/mod.js",
+  "types": "dist/mod.d.ts",
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.2",
+    "@types/node": "^17.0.40",
+    "rollup": "^2.75.6",
+    "rollup-plugin-delete": "^2.0.0",
+    "rollup-plugin-dts": "^4.2.2",
+    "rollup-plugin-terser": "^7.0.2",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.2"
+  }
+}
