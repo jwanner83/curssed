@@ -25,7 +25,8 @@ const config = [
       'fs/promises',
       '@curssed/compiler',
       'chalk',
-      'node:readline'
+      'node:readline',
+      'path'
     ]
   }
 ]
