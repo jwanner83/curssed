@@ -1,5 +1,5 @@
-import ASTHandler from '../handlers/ASTHandler'
-import StyleHandler from '../handlers/StyleHandler'
+import ASTHandler from '../interfaces/ASTHandler'
+import StyleHandler from '../interfaces/StyleHandler'
 import ErrorHandler from '../interfaces/ErrorHandler'
 import InputHandler from '../interfaces/InputHandler'
 
