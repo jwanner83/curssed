@@ -1,5 +1,5 @@
-import ErrorHandler from '../../interfaces/ErrorHandler'
-import { render } from '../../runtime'
+import { render } from '../mod'
+import { ErrorHandler } from '@curssed/types'
 
 export default class ErrorHandlerRuntime implements ErrorHandler {
   /**
