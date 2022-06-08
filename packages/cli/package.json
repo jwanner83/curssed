@@ -14,13 +14,13 @@
   },
   "dependencies": {
     "@curssed/compiler": "workspace:^",
-    "@curssed/types": "workspace:^",
     "arg": "^5.0.2",
     "fs-extra": "^10.1.0",
     "jsdom": "^19.0.0",
     "pretty": "^2.0.0"
   },
   "devDependencies": {
+    "@curssed/types": "workspace:^",
     "@babel/core": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
     "@rollup/plugin-babel": "^5.3.1",

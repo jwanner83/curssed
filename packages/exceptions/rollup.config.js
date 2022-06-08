@@ -14,7 +14,7 @@ const config = [
     ],
     output: {
       file: 'dist/mod.js',
-      format: 'esm',
+      format: 'cjs',
       compact: true
     }
   }
