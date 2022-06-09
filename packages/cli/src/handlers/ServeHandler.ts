@@ -7,6 +7,11 @@ import path from 'path'
 import { render } from '@curssed/compiler'
 import { CurssedRenderOptions } from '@curssed/types'
 import pretty from 'pretty'
+import mime from 'mime-types'
+import { readFile, pathExists, lstat } from 'fs-extra'
+import { JSDOM } from 'jsdom'
+import { watch } from 'chokidar'
+import chalk from 'chalk'
 
 export default class ServeHandler {
   /**
@@ -23,8 +28,15 @@ export default class ServeHandler {
 
   /**
    * The file handler
+   * @private
    */
-  public fileHandler: FileHandler
+  private fileHandler: FileHandler
+
+  /**
+   * Socket connections mapping
+   * @private
+   */
+  private sockets: Map<string, WebSocket[]> = new Map()
 
   constructor(log: LogHandler, args: ArgumentHandler) {
     this.log = log
@@ -40,12 +52,26 @@ export default class ServeHandler {
     app.use(tinyws())
 
     app.use('*', async (req, res) => {
-      const file = path.join(this.args.root, req.path)
+      const base = path.join(this.args.root, req.path)
+      let file = base
+
+      // if file exists without any modifications return it (e.g. assets)
+      if (await pathExists(base) && (await lstat(base)).isFile()) {
+        const content = await readFile(base)
+        const type = await mime.lookup(base)
+        return res.header('Content-Type', type).send(content)
+      }
 
       let options: CurssedRenderOptions = {
-        markup: {
-          file: file.replace('.html', '') + '.css'
-        }
+        markup: {}
+      }
+
+      if (await pathExists(path.join(base,'index.css'))) {
+        file = path.join(base,'index.css')
+        options.markup.file = path.join(base,'index.css')
+      } else if (await pathExists(base.replace('.html', '.css'))) {
+        file = base.replace('.html', '.css')
+        options.markup.file = base.replace('.html', '.css')
       }
 
       if (this.args.css) {
@@ -54,17 +80,64 @@ export default class ServeHandler {
         }
       }
 
-      const dom = await render(options)
+      const jsdom = new JSDOM(await render(options))
+      const document = jsdom.window.document
+      const script = document.createElement('script')
+      script.innerHTML = `
+          const socket = new WebSocket('ws://localhost:${this.args.port}/${req.path}')
+          socket.addEventListener('message', function (event) {
+            if (event.data === 'reload') { location.reload() }
+          });
+      `
+      document.body.appendChild(script)
 
       if (req.ws) {
         const ws = await req.ws()
 
-        return ws.send('hello there')
+        const connections = this.sockets.get(file) || []
+        connections.push(ws)
+        this.sockets.set(file, connections)
+
+        ws.on('close', () => {
+          const connections = this.sockets.get(file) || []
+          connections.splice(connections.indexOf(ws), 1)
+          this.sockets.set(file, connections)
+        })
       } else {
-        res.send(pretty(dom))
+        res.send(pretty(jsdom.serialize()))
       }
     })
 
     app.listen(this.args.port)
+    this.watch()
+  }
+
+  /**
+   * Watching the root folder for changes inside css files
+   * @private
+   */
+  private watch (): void {
+    const watcher = watch(this.args.root + '/**/*.css', {
+      persistent: true
+    });
+
+    watcher
+    .on('change', file => this.notify(file))
+    .on('unlink', file => this.notify(file));
+  }
+
+  /**
+   * Notify all connections for a specific file
+   * @param file
+   * @private
+   */
+  private notify (file: string): void {
+    const connections = this.sockets.get(file) || []
+
+    console.log(chalk.gray(`changes in '${file}'. hot reloading ${connections.length} connection${connections.length === 1 ? '' : 's'}`))
+
+    for (const connection of connections) {
+      connection.send('reload')
+    }
   }
 }
