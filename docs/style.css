@@ -1,13 +1,14 @@
-html, #root {
-    height: 100%;
-    width: 100%;
-    position: relative;
+html,
+#root {
+  height: 100%;
+  width: 100%;
+  position: relative;
 }
 
 body {
-    height: 100%;
-    width: 100%;
-    position: relative;
-    background: black;
-    margin: 0;
+  height: 100%;
+  width: 100%;
+  position: relative;
+  background: black;
+  margin: 0;
 }

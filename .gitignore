@@ -2,6 +2,7 @@ node_modules
 .idea
 bin
 dist
+!docs/dist
 .rollup.cache
 tsconfig.tsbuildinfo
 .rpt2_cache

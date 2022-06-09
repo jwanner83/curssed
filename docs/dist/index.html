@@ -1,0 +1,196 @@
+<html>
+
+  <head>
+    <style>
+      .wrapper .content .meme {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+        border-radius: 5px;
+      }
+
+      .wrapper .content .sub {
+        content: 'meme';
+      }
+
+      .wrapper .content .button .arrow {
+        width: 30px;
+        height: 30px;
+      }
+
+      .wrapper .content .button .label {
+        content: 'visit the documentation';
+        margin: 0;
+      }
+
+      .wrapper .content .button {
+        background: white;
+        color: black;
+        font-weight: bold;
+        text-decoration: none;
+        padding: 20px;
+        border-radius: 5px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .wrapper .content .sub {
+        content: 'documentation';
+      }
+
+      .wrapper .content .code .first {
+        content: '}).then()';
+      }
+
+      .wrapper .content .code .second {
+        content: '}<br>';
+      }
+
+      .wrapper .content .code .third {
+        margin-left: 40px;
+        content: 'content: \'.text[p] { content: "hello world"; color: red; }\'';
+      }
+
+      .wrapper .content .code .second {
+        margin-left: 20px;
+        content: 'markup: {<br>';
+      }
+
+      .wrapper .content .code .first {
+        content: '<br><br>render(document.body, {<br>';
+      }
+
+      .wrapper .content .code .first {
+        content: "import { render } from './curssed.js'";
+      }
+
+      .wrapper .content .code {
+        margin-top: 18px;
+        background: #2d2d2d;
+        border-radius: 5px;
+        padding: 16px;
+        color: white;
+      }
+
+      .wrapper .content .sub {
+        content: 'quick start';
+      }
+
+      .wrapper .content .text {
+        color: #9b9b9b;
+        line-height: 20px;
+        content: 'a framework for creating web experiences without knowing any other language than valid css. ';
+      }
+
+      .wrapper .content .sub {
+        color: white;
+        margin-top: 40px;
+        content: 'description';
+      }
+
+      .wrapper .content .header .github .image {
+        width: 100%;
+        height: 100%;
+      }
+
+      .wrapper .content .header .github {
+        position: relative;
+        width: 60px;
+        height: 60px;
+      }
+
+      .wrapper .content .header .intro .message {
+        color: #9b9b9b;
+        margin-bottom: 0;
+        margin-left: 2px;
+        font-size: 16px;
+        line-height: 22px;
+        content: 'the complete css framework';
+        text-decoration: none;
+      }
+
+      .wrapper .content .header .intro #title {
+        color: white;
+        margin-top: 2px;
+        margin-bottom: 8px;
+        font-size: 50px;
+        content: 'curssed';
+      }
+
+      .wrapper .content .header .intro {}
+
+      .wrapper .content .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .wrapper .content {
+        max-width: 600px;
+        margin: 0 auto;
+        padding: 80px 30px 30px;
+        font-family: monospace;
+      }
+
+      .wrapper {
+        height: 100%;
+        width: 100%;
+        background: black;
+      }
+    </style>
+    <style>
+      body {
+        height: 100%;
+        width: 100%;
+        position: relative;
+        background: black;
+        margin: 0;
+      }
+
+      html,
+      #root {
+        height: 100%;
+        width: 100%;
+        position: relative;
+      }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="title" content="curssed - the complete css framework">
+    <meta property="og:type" content="website">
+    <meta property="og:description" content="a framework for creating web experiences without knowing any other language than valid css.">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="curssed - the complete css framework">
+    <meta property="twitter:image" content="https://curssed.wanner.work/assets/social.png">
+  </head>
+
+  <body>
+    <main id="root">
+      <div class="wrapper">
+        <div class="content">
+          <div class="header">
+            <div class="intro">
+              <h1 id="title">curssed</h1><a class="message" href="https://github.com/jwanner83/curssed/" target="_blank">the complete css framework</a>
+            </div><a class="github" href="https://github.com/jwanner83/curssed/" target="_blank"><img class="image" src="assets/github.png" alt="GitHub"></a>
+          </div>
+          <h2 class="sub">description</h2>
+          <p class="text">a framework for creating web experiences without knowing any other language than valid css. </p>
+          <h2 class="sub">quick start</h2>
+          <div class="code">
+            <div class="first">import { render } from './curssed.js'</div>
+            <div class="first"><br><br>render(document.body, {<br></div>
+            <div class="second">markup: {<br></div>
+            <div class="third">content: \'.text[p] { content: "hello world"; color: red; }\'</div>
+            <div class="second">}<br></div>
+            <div class="first">}).then()</div>
+          </div>
+          <h2 class="sub">documentation</h2><a class="button" href="https://github.com/jwanner83/curssed#usage" target="_blank">
+            <p class="label">visit the documentation</p><img class="arrow" src="assets/arrow.png" alt="Arrow">
+          </a>
+          <h2 class="sub">meme</h2><img class="meme" src="assets/meme.jpg" alt="meme">
+        </div>
+      </div>
+    </main>
+  </body>
+
+</html>
