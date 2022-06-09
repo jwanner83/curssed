@@ -68,10 +68,16 @@ export default class ServeHandler {
 
       if (await pathExists(path.join(base,'index.css'))) {
         file = path.join(base,'index.css')
-        options.markup.file = path.join(base,'index.css')
+        options.markup.file = file
       } else if (await pathExists(base.replace('.html', '.css'))) {
         file = base.replace('.html', '.css')
-        options.markup.file = base.replace('.html', '.css')
+        options.markup.file = file
+      } else if (await pathExists(base + '.css')) {
+        file = base + '.css'
+        options.markup.file = file
+      } else {
+        console.log(chalk.red(`path '${req.path}' couldn't be handled`))
+        return // return a rendered error message like in the runtime
       }
 
       if (this.args.css) {
