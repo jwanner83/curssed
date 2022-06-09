@@ -139,7 +139,7 @@ export default class ServeHandler {
    */
   private async live (file: string): Promise<void> {
     const connections = this.sockets.get(file) || []
-    console.log(chalk.gray(`changes in '${file}'. hot reloading ${connections.length} connection${connections.length === 1 ? '' : 's'}`))
+    console.log(chalk.gray(`changes in '${file}'. realtime html manipulation on ${connections.length} connection${connections.length === 1 ? '' : 's'}`))
 
     const options: CurssedRenderOptions = {
       markup: {
