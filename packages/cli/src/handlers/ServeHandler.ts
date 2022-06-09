@@ -92,8 +92,8 @@ export default class ServeHandler {
       script.innerHTML = `
           const socket = new WebSocket('ws://localhost:${this.args.port}/${req.path}')
           socket.addEventListener('message', function (event) {
-            if (event.data === 'reload') { location.reload() }
-          });
+            document.body.innerHTML = event.data
+          })
       `
       document.body.appendChild(script)
 
@@ -128,8 +128,8 @@ export default class ServeHandler {
     });
 
     watcher
-    .on('change', file => this.notify(file))
-    .on('unlink', file => this.notify(file));
+    .on('change', file => this.live(file))
+    .on('unlink', file => this.live(file));
   }
 
   /**
@@ -137,13 +137,25 @@ export default class ServeHandler {
    * @param file
    * @private
    */
-  private notify (file: string): void {
+  private async live (file: string): Promise<void> {
     const connections = this.sockets.get(file) || []
-
     console.log(chalk.gray(`changes in '${file}'. hot reloading ${connections.length} connection${connections.length === 1 ? '' : 's'}`))
 
+    const options: CurssedRenderOptions = {
+      markup: {
+        file
+      }
+    }
+    if (this.args.css) {
+      options.css = {
+        file: this.args.css
+      }
+    }
+    const jsdom = new JSDOM(await render(options))
+    const dom = pretty(jsdom.window.document.body.innerHTML)
+
     for (const connection of connections) {
-      connection.send('reload')
+      connection.send(dom)
     }
   }
 }
