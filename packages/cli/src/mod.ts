@@ -14,7 +14,7 @@ void (async () => {
   console.log(`${name} - ${version}`)
 
   try {
-    let root = path.join('pages')
+    let root = path.join('public')
     let pages: Map<string, string> = new Map()
     let options: CurssedRenderOptions = {
       markup: {}
@@ -42,10 +42,12 @@ void (async () => {
     }
 
     log.progress('resolving pages')
-    const files = await getMarkupFiles(root)
+    const files = await getFiles(root)
+    const markup = files.filter(item => item.endsWith('.css'))
+    const assets = files.filter(item => !item.endsWith('.css'))
 
-    for (const [index, file] of files.entries()) {
-      log.progress(`rendering ${index + 1} of ${files.length} pages`)
+    for (const [index, file] of markup.entries()) {
+      log.progress(`rendering ${index + 1} of ${markup.length} pages`)
       pages.set(file, await render({
         ...options,
         markup: {
@@ -64,7 +66,10 @@ void (async () => {
       await writeFile(dir, pretty(document), { flag: 'w+' })
     }
 
-    await copy('public', 'dist')
+    for (const asset of assets) {
+      const dest = asset.replace(root, 'dist')
+      await copy(asset, dest)
+    }
 
     log.success('done. the folder `dist` is ready for deployment.')
   } catch (exception) {
@@ -79,21 +84,21 @@ void (async () => {
 })()
 
 /**
- * Get all .css files recursively from directory
+ * Get all files recursively from directory
  * @param dir
  */
-async function getMarkupFiles (dir: string) {
-  const paths: string[] = []
+async function getFiles (dir: string) {
+  const files: string[] = []
   const entries = await readdir(dir, { withFileTypes: true })
 
   for (const entry of entries) {
-    if (entry.isFile() && entry.name.endsWith('.css')) {
-      paths.push(`${dir}${sep}${entry.name}`)
+    if (entry.isFile()) {
+      files.push(`${dir}${sep}${entry.name}`)
     } else if (entry.isDirectory()) {
-      const children = await getMarkupFiles(`${dir}${sep}${entry.name}`)
-      paths.push(...children)
+      const children = await getFiles(`${dir}${sep}${entry.name}`)
+      files.push(...children)
     }
   }
 
-  return paths
+  return files
 }
