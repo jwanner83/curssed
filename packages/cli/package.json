@@ -14,18 +14,22 @@
   },
   "dependencies": {
     "@curssed/compiler": "workspace:^",
+    "@tinyhttp/app": "^2.0.22",
     "arg": "^5.0.2",
     "fs-extra": "^10.1.0",
     "jsdom": "^19.0.0",
-    "pretty": "^2.0.0"
+    "pretty": "^2.0.0",
+    "tinyws": "^0.1.0",
+    "ws": "^8.7.0"
   },
   "devDependencies": {
-    "@curssed/types": "workspace:^",
     "@babel/core": "^7.18.2",
     "@babel/preset-env": "^7.18.2",
+    "@curssed/types": "workspace:^",
     "@rollup/plugin-babel": "^5.3.1",
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-json": "^4.1.0",
+    "@rollup/plugin-node-resolve": "^13.3.0",
     "@rollup/plugin-typescript": "^8.3.2",
     "@types/fs-extra": "^9.0.13",
     "@types/jsdom": "^16.2.14",
