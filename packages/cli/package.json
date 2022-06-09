@@ -16,8 +16,10 @@
     "@curssed/compiler": "workspace:^",
     "@tinyhttp/app": "^2.0.22",
     "arg": "^5.0.2",
+    "chokidar": "^3.5.3",
     "fs-extra": "^10.1.0",
     "jsdom": "^19.0.0",
+    "mime-types": "^2.1.35",
     "pretty": "^2.0.0",
     "tinyws": "^0.1.0",
     "ws": "^8.7.0"

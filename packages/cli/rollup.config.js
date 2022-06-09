@@ -28,7 +28,10 @@ const config = [
       '@curssed/compiler',
       'chalk',
       'node:readline',
-      'path'
+      'path',
+      'mime-types',
+      'chokidar',
+      'jsdom'
     ]
   }
 ]
