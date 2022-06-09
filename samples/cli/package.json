@@ -4,6 +4,7 @@
     "@curssed/cli": "workspace:^"
   },
   "scripts": {
-    "build": "curssed build --css style.css"
+    "build": "curssed build --css style.css",
+    "serve": "curssed serve --css style.css"
   }
 }
