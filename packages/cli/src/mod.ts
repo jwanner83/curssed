@@ -1,12 +1,9 @@
-import arg from 'arg'
-import { copy } from 'fs-extra'
-import { mkdir, writeFile, readdir } from 'fs/promises'
-import pretty from 'pretty'
 import { name, version } from '../package.json'
 import LogHandler from './handlers/LogHandler'
-import { render } from '@curssed/compiler'
-import path, { sep } from 'path'
-import { CurssedRenderOptions } from '@curssed/types'
+import ArgumentHandler from './handlers/ArgumentHandler'
+import { CommandTypes } from './types/Command.types'
+import BuildHandler from './handlers/BuildHandler'
+import ServeHandler from './handlers/ServeHandler'
 
 void (async () => {
   const log = new LogHandler()
@@ -14,64 +11,19 @@ void (async () => {
   console.log(`${name} - ${version}`)
 
   try {
-    let root = path.join('public')
-    let pages: Map<string, string> = new Map()
-    let options: CurssedRenderOptions = {
-      markup: {}
-    }
+    const args = new ArgumentHandler()
 
-    const args = arg({
-      '--root': String,
-      '--css': String
-    })
-
-    if (!args['_'].includes('build')) {
-      log.error('failed. specify, what the cli should do. (e.g. `curssed build`)')
+    if (args.command === CommandTypes.Build) {
+      const buildHandler = new BuildHandler(log, args)
+      await buildHandler.build()
+    } else if (args.command === CommandTypes.Serve) {
+      const serveHandler = new ServeHandler(log, args)
+      await serveHandler.serve()
+    } else {
+      log.error('failed. specify, what the cli should do. (e.g. `curssed build` or `curssed serve`)')
       log.close()
       return
     }
-
-    if (args['--root']) {
-      root = path.join(args['--root'])
-    }
-
-    if (args['--css']) {
-      options.css = {
-        file: args['--css']
-      }
-    }
-
-    log.progress('resolving pages')
-    const files = await getFiles(root)
-    const markup = files.filter(item => item.endsWith('.css'))
-    const assets = files.filter(item => !item.endsWith('.css'))
-
-    for (const [index, file] of markup.entries()) {
-      log.progress(`rendering ${index + 1} of ${markup.length} pages`)
-      pages.set(file, await render({
-        ...options,
-        markup: {
-          file
-        }
-      }))
-    }
-
-    for (const [key, document] of pages) {
-      log.progress(`writing pages`)
-      const dir = key.replace(root, 'dist').replace('.css', '.html')
-
-      const folder  = dir.split(sep)
-      folder.pop()
-      await mkdir(folder.join(sep), { recursive: true })
-      await writeFile(dir, pretty(document), { flag: 'w+' })
-    }
-
-    for (const asset of assets) {
-      const dest = asset.replace(root, 'dist')
-      await copy(asset, dest)
-    }
-
-    log.success('done. the folder `dist` is ready for deployment.')
   } catch (exception) {
     const kebab: string = exception
       .toString()
@@ -83,22 +35,3 @@ void (async () => {
   log.close()
 })()
 
-/**
- * Get all files recursively from directory
- * @param dir
- */
-async function getFiles (dir: string) {
-  const files: string[] = []
-  const entries = await readdir(dir, { withFileTypes: true })
-
-  for (const entry of entries) {
-    if (entry.isFile()) {
-      files.push(`${dir}${sep}${entry.name}`)
-    } else if (entry.isDirectory()) {
-      const children = await getFiles(`${dir}${sep}${entry.name}`)
-      files.push(...children)
-    }
-  }
-
-  return files
-}
