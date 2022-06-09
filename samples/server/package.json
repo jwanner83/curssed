@@ -1,9 +1,0 @@
-{
-  "private": true,
-  "dependencies": {
-    "curssed": "workspace:^"
-  },
-  "scripts": {
-    "build": "curssed --markup markup.css --css style.css"
-  }
-}
