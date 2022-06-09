@@ -17,6 +17,7 @@ void (async () => {
       const buildHandler = new BuildHandler(log, args)
       await buildHandler.build()
     } else if (args.command === CommandTypes.Serve) {
+      log.success(`started server on http://localhost:${args.port}/`)
       const serveHandler = new ServeHandler(log, args)
       await serveHandler.serve()
     } else {
