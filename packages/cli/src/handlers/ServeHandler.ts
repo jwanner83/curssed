@@ -1,17 +1,17 @@
-import LogHandler from './LogHandler'
-import ArgumentHandler from './ArgumentHandler'
-import FileHandler from './FileHandler'
-import { App, Request } from '@tinyhttp/app'
-import { tinyws, TinyWSRequest } from 'tinyws'
-import path from 'path'
 import { render } from '@curssed/compiler'
 import { CurssedRenderOptions } from '@curssed/types'
-import pretty from 'pretty'
-import mime from 'mime-types'
-import { readFile, pathExists, lstat } from 'fs-extra'
-import { JSDOM } from 'jsdom'
-import { watch } from 'chokidar'
+import { App, Request } from '@tinyhttp/app'
 import chalk from 'chalk'
+import { watch } from 'chokidar'
+import { lstat, pathExists, readFile } from 'fs-extra'
+import { JSDOM } from 'jsdom'
+import mime from 'mime-types'
+import path from 'path'
+import pretty from 'pretty'
+import { tinyws, TinyWSRequest } from 'tinyws'
+import ArgumentHandler from './ArgumentHandler'
+import FileHandler from './FileHandler'
+import LogHandler from './LogHandler'
 
 export default class ServeHandler {
   /**
@@ -47,7 +47,7 @@ export default class ServeHandler {
   /**
    * Serve the project
    */
-  public async serve (): Promise<void> {
+  public async serve(): Promise<void> {
     const app = new App<any, Request & TinyWSRequest>()
     app.use(tinyws())
 
@@ -56,7 +56,7 @@ export default class ServeHandler {
       let file = base
 
       // if file exists without any modifications return it (e.g. assets)
-      if (await pathExists(base) && (await lstat(base)).isFile()) {
+      if ((await pathExists(base)) && (await lstat(base)).isFile()) {
         const content = await readFile(base)
         const type = await mime.lookup(base)
         return res.header('Content-Type', type).send(content)
@@ -66,8 +66,8 @@ export default class ServeHandler {
         markup: {}
       }
 
-      if (await pathExists(path.join(base,'index.css'))) {
-        file = path.join(base,'index.css')
+      if (await pathExists(path.join(base, 'index.css'))) {
+        file = path.join(base, 'index.css')
         options.markup.file = file
       } else if (await pathExists(base.replace('.html', '.css'))) {
         file = base.replace('.html', '.css')
@@ -122,14 +122,14 @@ export default class ServeHandler {
    * Watching the root folder for changes inside css files
    * @private
    */
-  private watch (): void {
+  private watch(): void {
     const watcher = watch(this.args.root + '/**/*.css', {
       persistent: true
-    });
+    })
 
     watcher
-    .on('change', file => this.live(file))
-    .on('unlink', file => this.live(file));
+      .on('change', (file) => this.live(file))
+      .on('unlink', (file) => this.live(file))
   }
 
   /**
@@ -137,9 +137,15 @@ export default class ServeHandler {
    * @param file
    * @private
    */
-  private async live (file: string): Promise<void> {
+  private async live(file: string): Promise<void> {
     const connections = this.sockets.get(file) || []
-    console.log(chalk.gray(`changes in '${file}'. realtime html manipulation on ${connections.length} connection${connections.length === 1 ? '' : 's'}`))
+    console.log(
+      chalk.gray(
+        `changes in '${file}'. realtime html manipulation on ${
+          connections.length
+        } connection${connections.length === 1 ? '' : 's'}`
+      )
+    )
 
     const options: CurssedRenderOptions = {
       markup: {

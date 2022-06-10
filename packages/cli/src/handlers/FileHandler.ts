@@ -6,7 +6,7 @@ export default class FileHandler {
    * Get all files recursively from directory
    * @param dir
    */
-  public async getFiles (dir: string) {
+  public async getFiles(dir: string) {
     const files: string[] = []
     const entries = await readdir(dir, { withFileTypes: true })
 
@@ -21,5 +21,4 @@ export default class FileHandler {
 
     return files
   }
-
 }

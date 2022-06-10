@@ -8,10 +8,7 @@ const production = !process.env.ROLLUP_WATCH
 const config = [
   {
     input: 'src/mod.ts',
-    plugins: [
-      typescript({ tsconfig: './tsconfig.json' }),
-      terser()
-    ],
+    plugins: [typescript({ tsconfig: './tsconfig.json' }), terser()],
     output: {
       file: 'dist/curssed.runtime.js',
       format: 'esm',

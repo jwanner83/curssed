@@ -25,15 +25,11 @@ async function initialization({
       document.head.appendChild(styleHandler.renderCSS(css))
     }
 
-    headNode.childNodes.forEach(child => document.head.appendChild(child))
+    headNode.childNodes.forEach((child) => document.head.appendChild(child))
     element.appendChild(bodyNode)
   } catch (error) {
     errorHandler.handleError(error.message)
   }
 }
 
-export {
-  initialization,
-  StyleHandlerImplementation,
-  ASTHandlerImplementation
-}
+export { initialization, StyleHandlerImplementation, ASTHandlerImplementation }

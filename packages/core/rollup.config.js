@@ -8,10 +8,7 @@ const production = !process.env.ROLLUP_WATCH
 const config = [
   {
     input: 'src/mod.ts',
-    plugins: [
-      typescript({ tsconfig: './tsconfig.json' }),
-      terser()
-    ],
+    plugins: [typescript({ tsconfig: './tsconfig.json' }), terser()],
     output: {
       file: 'dist/mod.js',
       format: 'cjs',
@@ -23,10 +20,7 @@ const config = [
 if (production) {
   config.push({
     input: 'dist/types/mod.d.ts',
-    plugins: [
-      dts(),
-      del({ targets: ['dist/types'], hook: 'buildEnd' })
-    ],
+    plugins: [dts(), del({ targets: ['dist/types'], hook: 'buildEnd' })],
     output: [
       {
         file: 'dist/mod.d.ts',

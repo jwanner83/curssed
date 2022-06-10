@@ -1,9 +1,9 @@
 import { name, version } from '../package.json'
-import LogHandler from './handlers/LogHandler'
 import ArgumentHandler from './handlers/ArgumentHandler'
-import { CommandTypes } from './types/Command.types'
 import BuildHandler from './handlers/BuildHandler'
+import LogHandler from './handlers/LogHandler'
 import ServeHandler from './handlers/ServeHandler'
+import { CommandTypes } from './types/Command.types'
 
 void (async () => {
   const log = new LogHandler()
@@ -21,7 +21,9 @@ void (async () => {
       const serveHandler = new ServeHandler(log, args)
       await serveHandler.serve()
     } else {
-      log.error('failed. specify, what the cli should do. (e.g. `curssed build` or `curssed serve`)')
+      log.error(
+        'failed. specify, what the cli should do. (e.g. `curssed build` or `curssed serve`)'
+      )
       log.close()
       return
     }
@@ -35,4 +37,3 @@ void (async () => {
 
   log.close()
 })()
-

@@ -26,10 +26,7 @@ const config = [
 if (production) {
   config.push({
     input: 'dist/types/mod.d.ts',
-    plugins: [
-      dts(),
-      del({ targets: ['dist/types'], hook: 'buildEnd' })
-    ],
+    plugins: [dts(), del({ targets: ['dist/types'], hook: 'buildEnd' })],
     output: [
       {
         file: 'dist/curssed.server.d.ts',

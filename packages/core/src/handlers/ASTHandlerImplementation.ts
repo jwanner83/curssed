@@ -1,5 +1,5 @@
-import { ASTHandler, CurssedAST } from '@curssed/types'
 import { CurssedError } from '@curssed/exceptions'
+import { ASTHandler, CurssedAST } from '@curssed/types'
 import AST from '../models/AST'
 
 export default class ASTHandlerImplementation implements ASTHandler {
@@ -22,7 +22,10 @@ export default class ASTHandlerImplementation implements ASTHandler {
    * Reads the input options and returns the content.
    * @param rules
    */
-  public resolveAST(rules: CSSRuleList): { body: CurssedAST, head: CurssedAST } {
+  public resolveAST(rules: CSSRuleList): {
+    body: CurssedAST
+    head: CurssedAST
+  } {
     const body = new AST('#root', 'main')
     const head = new AST('#head', 'head')
 
@@ -50,11 +53,14 @@ export default class ASTHandlerImplementation implements ASTHandler {
         continue
       }
 
-      const elements = ASTHandlerImplementation.getElementsFromSelector(selectorText)
+      const elements =
+        ASTHandlerImplementation.getElementsFromSelector(selectorText)
 
       elements.forEach((element, index) => {
         if (ASTHandlerImplementation.isHeadSelector(selectorText)) {
-          throw new CurssedError(`the head declaration '::before' can only appear at top level and cannot be nested.`)
+          throw new CurssedError(
+            `the head declaration '::before' can only appear at top level and cannot be nested.`
+          )
         }
 
         const name = ASTHandlerImplementation.getName(element)
@@ -75,7 +81,9 @@ export default class ASTHandlerImplementation implements ASTHandler {
         }
       })
 
-      child.name = ASTHandlerImplementation.getName(elements[elements.length - 1])
+      child.name = ASTHandlerImplementation.getName(
+        elements[elements.length - 1]
+      )
       current.children.push(child)
     }
 

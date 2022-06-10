@@ -1,5 +1,5 @@
-import { CurssedInputOptions, InputHandler } from '@curssed/types'
 import { CurssedError } from '@curssed/exceptions'
+import { CurssedInputOptions, InputHandler } from '@curssed/types'
 
 export default class InputHandlerRuntime implements InputHandler {
   async resolveContent(input: CurssedInputOptions): Promise<string> {

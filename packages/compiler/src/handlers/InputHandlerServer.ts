@@ -1,7 +1,7 @@
+import { CurssedError } from '@curssed/exceptions'
+import { CurssedInputOptions, InputHandler } from '@curssed/types'
 import { readFile } from 'fs'
 import { promisify } from 'util'
-import { CurssedInputOptions, InputHandler } from '@curssed/types'
-import { CurssedError } from '@curssed/exceptions'
 
 export default class InputHandlerServer implements InputHandler {
   async resolveContent(input: CurssedInputOptions): Promise<string> {

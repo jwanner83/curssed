@@ -40,7 +40,9 @@ export default class ArgumentHandler {
     } else if (this.args['_'].includes('serve')) {
       this.command = CommandTypes.Serve
     } else {
-      throw new Error('failed. specify, what the cli should do. (e.g. `curssed build`)')
+      throw new Error(
+        'failed. specify, what the cli should do. (e.g. `curssed build`)'
+      )
     }
 
     if (this.args['--root']) {

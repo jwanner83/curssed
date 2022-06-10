@@ -1,9 +1,13 @@
-import { CurssedAST } from './types/AST.types'
-import { CurssedRenderOptions, CurssedInitializationOptions, CurssedInputOptions } from './types/Curssed.types'
-import StyleHandler from './interfaces/StyleHandler'
 import ASTHandler from './interfaces/ASTHandler'
-import InputHandler from './interfaces/InputHandler'
 import ErrorHandler from './interfaces/ErrorHandler'
+import InputHandler from './interfaces/InputHandler'
+import StyleHandler from './interfaces/StyleHandler'
+import { CurssedAST } from './types/AST.types'
+import {
+  CurssedInitializationOptions,
+  CurssedInputOptions,
+  CurssedRenderOptions
+} from './types/Curssed.types'
 
 export {
   CurssedAST,

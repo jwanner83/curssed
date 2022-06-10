@@ -1,5 +1,5 @@
-import ASTHandlerImplementation from './ASTHandlerImplementation'
 import { StyleHandler } from '@curssed/types'
+import ASTHandlerImplementation from './ASTHandlerImplementation'
 
 export default class StyleHandlerImplementation implements StyleHandler {
   /**
@@ -38,14 +38,18 @@ export default class StyleHandlerImplementation implements StyleHandler {
 
     for (const rule of Array.from(raw.sheet.cssRules) as CSSStyleRule[]) {
       if (!rule.selectorText.startsWith('::before')) {
-        work.sheet.insertRule(rule.cssText.replace(
-          rule.selectorText,
-          StyleHandlerImplementation.getCleanedSelector(rule.selectorText)
-        ))
+        work.sheet.insertRule(
+          rule.cssText.replace(
+            rule.selectorText,
+            StyleHandlerImplementation.getCleanedSelector(rule.selectorText)
+          )
+        )
       }
     }
 
-    const rules = (Array.from(work.sheet.cssRules) as CSSStyleRule[]).map(rule => rule.cssText)
+    const rules = (Array.from(work.sheet.cssRules) as CSSStyleRule[]).map(
+      (rule) => rule.cssText
+    )
     const clean = this.virtual.createElement('style')
     clean.innerHTML = rules.join(' ')
 
@@ -58,6 +62,8 @@ export default class StyleHandlerImplementation implements StyleHandler {
    * @private
    */
   private static getCleanedSelector(selector: string) {
-    return selector.trim().replaceAll(ASTHandlerImplementation.ARGUMENT_REGEX, '')
+    return selector
+      .trim()
+      .replaceAll(ASTHandlerImplementation.ARGUMENT_REGEX, '')
   }
 }
