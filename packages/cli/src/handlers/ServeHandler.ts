@@ -3,7 +3,7 @@ import { CurssedRenderOptions } from '@curssed/types'
 import { App, Request } from '@tinyhttp/app'
 import chalk from 'chalk'
 import { watch } from 'chokidar'
-import { lstat, pathExists, readFile } from 'fs-extra'
+import fse from 'fs-extra'
 import { JSDOM } from 'jsdom'
 import mime from 'mime-types'
 import path from 'path'
@@ -12,6 +12,8 @@ import { tinyws, TinyWSRequest } from 'tinyws'
 import ArgumentHandler from './ArgumentHandler'
 import FileHandler from './FileHandler'
 import LogHandler from './LogHandler'
+
+const { lstat, pathExists, readFile } = fse
 
 export default class ServeHandler {
   /**

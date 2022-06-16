@@ -10,7 +10,7 @@
     "bin/*"
   ],
   "bin": {
-    "curssed": "bin/curssed.cli.js"
+    "curssed": "bin/curssed.cli.mjs"
   },
   "dependencies": {
     "@curssed/compiler": "workspace:^",

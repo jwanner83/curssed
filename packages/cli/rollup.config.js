@@ -3,6 +3,9 @@ import json from '@rollup/plugin-json'
 import resolve from '@rollup/plugin-node-resolve'
 import typescript from '@rollup/plugin-typescript'
 import { terser } from 'rollup-plugin-terser'
+import pack from './package.json'
+
+const deps = d => (d ? Object.keys(d) : []);
 
 const config = [
   {
@@ -15,22 +18,14 @@ const config = [
       terser()
     ],
     output: {
-      file: 'bin/curssed.cli.js',
-      format: 'cjs',
+      file: 'bin/curssed.cli.mjs',
+      format: 'esm',
       banner: '#!/usr/bin/env node',
       compact: true
     },
     external: [
-      'arg',
-      'fs-extra',
-      'fs/promises',
-      '@curssed/compiler',
-      'chalk',
-      'node:readline',
-      'path',
-      'mime-types',
-      'chokidar',
-      'jsdom'
+      ...deps(pack.dependencies),
+      ...deps(pack.devDependencies)
     ]
   }
 ]
