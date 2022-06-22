@@ -13,7 +13,11 @@ const config = [
       file: 'dist/curssed.runtime.js',
       format: 'esm',
       compact: true
-    }
+    },
+    external: [
+      '@curssed/core',
+      '@curssed/exceptions'
+    ]
   }
 ]
 
