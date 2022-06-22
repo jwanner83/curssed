@@ -103,7 +103,10 @@ export default class ServeHandler {
       script.innerHTML = `
           const socket = new WebSocket('ws://localhost:${this.args.port}/${req.path}')
           socket.addEventListener('message', function (event) {
-            document.body.innerHTML = event.data
+            const { head, body } = JSON.parse(event.data)
+            
+            document.body.innerHTML = body
+            document.head.innerHTML = head
           })
       `
       document.body.appendChild(script)
