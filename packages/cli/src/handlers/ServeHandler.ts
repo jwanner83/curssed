@@ -169,4 +169,56 @@ export default class ServeHandler {
       connection.send(dom)
     }
   }
+
+  private static handleError(message, title = 'failed to render') {
+    console.log(chalk.red(`${title}: ${message}`))
+
+    return render({
+      markup: {
+        content: `
+            .wrapper[div] {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;   
+            }
+            
+            .wrapper .content {
+                width: 600px;
+                padding: 30px 30px 26px;
+                border: 3px solid red;
+                border-radius: 5px;
+                background: #fff5f5;
+                font-family: monospace;
+            }
+            
+            .wrapper .content .title[h1] {
+                color: red;
+                margin-top: 8px;
+                content: "${ServeHandler.getValidContent(title)}";
+            }
+            
+            .wrapper .content .message[p] {
+                color: #ff6565;
+                margin-bottom: 0;
+                line-height: 24px;
+                content: "${ServeHandler.getValidContent(message)}";
+            }
+            `
+      }
+    }).then()
+  }
+
+  /**
+   * Get a valid content
+   * @param message
+   * @private
+   */
+  private static getValidContent(message: string): string {
+    return message.replaceAll('"', '\\"')
+  }
 }
