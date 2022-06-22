@@ -78,8 +78,11 @@ export default class ServeHandler {
         file = base + '.css'
         options.markup.file = file
       } else {
-        console.log(chalk.red(`path '${req.path}' couldn't be handled`))
-        return // return a rendered error message like in the runtime
+        // show a console warning if path couldn't be found except if it is the favicon.ico request
+        if (!req.path.endsWith('favicon.ico')) {
+          console.log(chalk.yellow(`failed to serve: the path '${req.path}' couldn't be handled`))
+        }
+        return
       }
 
       if (this.args.css) {
