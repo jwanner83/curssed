@@ -91,7 +91,13 @@ export default class ServeHandler {
         }
       }
 
-      const jsdom = new JSDOM(await render(options))
+      let jsdom
+
+      try {
+        jsdom = new JSDOM(await render(options))
+      } catch (error) {
+        jsdom = new JSDOM(await ServeHandler.handleError(error.message))
+      }
       const document = jsdom.window.document
       const script = document.createElement('script')
       script.innerHTML = `
@@ -162,11 +168,20 @@ export default class ServeHandler {
         file: this.args.css
       }
     }
-    const jsdom = new JSDOM(await render(options))
-    const dom = pretty(jsdom.window.document.body.innerHTML)
+
+    let jsdom
+
+    try {
+      jsdom = new JSDOM(await render(options))
+    } catch (error) {
+      jsdom = new JSDOM(await ServeHandler.handleError(error.message))
+    }
+
+    const body = pretty(jsdom.window.document.body.innerHTML)
+    const head = pretty(jsdom.window.document.head.innerHTML)
 
     for (const connection of connections) {
-      connection.send(dom)
+      connection.send(JSON.stringify({ body, head }))
     }
   }
 
