@@ -23,10 +23,10 @@ const config = [
 
 if (production) {
   config.push({
-    input: 'dist/types/mod.d.ts',
+    input: 'dist/mod.d.ts',
     plugins: [
       dts(),
-      del({ targets: ['dist/types', 'dist/mod.d.ts'], hook: 'buildEnd' })
+      del({ targets: ['dist/**/', 'dist/mod.d.ts'], hook: 'buildEnd' })
     ],
     output: [
       {

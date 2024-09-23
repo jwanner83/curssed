@@ -50,7 +50,7 @@ export default class ServeHandler {
    * Serve the project
    */
   public async serve(): Promise<void> {
-    const app = new App<any, Request & TinyWSRequest>()
+    const app = new App<any, any>()
     app.use(tinyws())
 
     app.use('*', async (req, res) => {
